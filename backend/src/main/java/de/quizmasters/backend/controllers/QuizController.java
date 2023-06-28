@@ -2,9 +2,7 @@ package de.quizmasters.backend.controllers;
 
 import de.quizmasters.backend.models.Quiz;
 import de.quizmasters.backend.models.QuizService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +19,10 @@ public class QuizController {
     @GetMapping
     public List<Quiz> getAll(){
         return quizService.getAllQuizzesService();
+    }
+
+    @PostMapping
+    public List<Quiz> add(@RequestBody Quiz newQuiz) {
+        return quizService.addQuizService(newQuiz);
     }
 }

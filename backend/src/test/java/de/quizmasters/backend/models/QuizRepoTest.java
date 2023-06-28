@@ -26,5 +26,14 @@ class QuizRepoTest {
         Assertions.assertEquals(expectedList, actualList);
 
     }
+    @Test
+    void getNewQuizInList_whenAddQuizIsCalled(){
+        //GIVEN
+        Quiz testQuiz= new Quiz("3", "Welche Farben haben Zebras?", "Schwarz-Weiß");
+        //WHEN
+        List<Quiz> actualList=quizRepo.addQuiz(testQuiz);
+        //THEN
+        Assertions.assertTrue(actualList.contains(testQuiz));
+    }
 
 }

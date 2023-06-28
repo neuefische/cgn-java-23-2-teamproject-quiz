@@ -14,4 +14,9 @@ public class QuizRepo {
     public List<Quiz> getAllQuizzes(){
         return quizList;
     }
+
+    public List<Quiz> addQuiz(Quiz newQuiz){
+        quizList.add(newQuiz);
+        return quizList;
+    }
 }
