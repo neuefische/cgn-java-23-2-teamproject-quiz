@@ -11,10 +11,9 @@ public class Quiz {
     private String question;
     private String answer;
 
-    public Quiz(String question, String answer) {
-        this.id = UUID.randomUUID().toString().substring(1,4);
+    public Quiz(String id, String question, String answer) {
+        this.id = id;
         this.question = question;
         this.answer = answer;
     }
-
 }
