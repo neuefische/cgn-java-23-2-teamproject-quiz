@@ -9,7 +9,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class QuizService {
+
     private final QuizRepo quizRepo;
+
     public List<Quiz> getAllQuizzesService(){
         return quizRepo.getAllQuizzes();
     }
