@@ -26,4 +26,18 @@ class QuizServiceTest {
         assertEquals(expectedList, actualList);
         verify(quizRepo).getAllQuizzes();
     }
+    @Test
+    void getNewQuizInList_whenAddQuizServiceIsCalled() {
+        //GIVEN
+        Quiz newQuiz= new Quiz("3", "Welche Farben haben Zebras?", "Schwarz-Weiß");
+        Quiz testQuiz1 = new Quiz("1", "Sind Giraffen größer als Hunde?", "Ja");
+        Quiz testQuiz2 = new Quiz("2", "Sind Hunde schneller als Schnecken?", "Ja");
+        List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, testQuiz2, newQuiz));
+        //WHEN
+        when(quizRepo.addQuiz(newQuiz)).thenReturn(expectedList);
+        List<Quiz> actualList = quizService.addQuizService(newQuiz);
+        //THEN
+        assertEquals(expectedList, actualList);
+        verify(quizRepo).addQuiz(newQuiz);
+    }
 }
