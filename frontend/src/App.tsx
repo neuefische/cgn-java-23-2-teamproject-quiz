@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {useEffect, useState} from "react";
+import {Quiz} from "./model/Quiz.tsx";
+import axios from "axios";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const[quizzes, setQuizzes] = useState<Quiz[]>()
 
+  useEffect(() => {
+    axios.get('/api/quiz')
+        .then(function (response) {
+          setQuizzes(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  }, [])
+
+    if(!quizzes)
+        return <h1> ... loading </h1>
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {quizzes?.map(quiz =>{
+          return (
+              <>
+                <p> {quiz.question}</p>
+                <p> {quiz.answer}</p>
+              </>
+          )
+        })}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
-
-export default App
