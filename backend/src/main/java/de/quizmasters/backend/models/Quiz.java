@@ -7,9 +7,9 @@ import java.util.UUID;
 @Data
 public class Quiz {
 
-    String id;
-    String question;
-    String answer;
+    private String id;
+    private String question;
+    private String answer;
 
     public Quiz(String question, String answer) {
         this.id = UUID.randomUUID().toString().substring(1,4);
@@ -18,4 +18,3 @@ public class Quiz {
     }
 
 }
-
