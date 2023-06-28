@@ -2,8 +2,6 @@ package de.quizmasters.backend.models;
 
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 public class Quiz {
 
