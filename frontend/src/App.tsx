@@ -19,7 +19,7 @@ export default function App() {
     function handleSubmit(event:FormEvent<HTMLFormElement>){
         event.preventDefault()
         const newQuiz: Quiz = {
-            id: ""+quizzes.length+1,
+            id: ""+quizzes?.length+1,
             question: question,
             answer: answer,
         }
