@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public class QuizRepo {
-    final private List<Quiz> quizList=new ArrayList<>(List.of(
+     private final List<Quiz> quizList=new ArrayList<>(List.of(
             new Quiz("1", "Sind Giraffen größer als Hunde?", "Ja"),
             new Quiz("2", "Sind Hunde schneller als Schnecken?", "Ja")
     ));
