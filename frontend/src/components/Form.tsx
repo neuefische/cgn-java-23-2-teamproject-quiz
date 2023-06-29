@@ -1,7 +1,9 @@
+import {FormEvent} from "react";
+
 type Props={
-    onSubmit: ()=>void,
-    onQuestion: ()=>void,
-    onAnswer: ()=>void
+    onSubmit: (event:FormEvent<HTMLFormElement> )=>void,
+    onQuestion: (event:FormEvent<HTMLInputElement>)=>void,
+    onAnswer: (event:FormEvent<HTMLInputElement>)=>void
 }
 export default function Form(props: Props) {
     return (
