@@ -3,6 +3,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {Quiz} from "./model/Quiz.tsx";
 import axios from "axios";
 import Form from "./components/Form.tsx";
+import QuizCard from "./components/QuizCard.tsx";
 
 export default function App() {
   const[quizzes, setQuizzes] = useState<Quiz[]>()
@@ -43,6 +44,10 @@ export default function App() {
 
     if(!quizzes)
         return <h1> ... loading </h1>
+
+    function setNewQuizzes(quizzes: Quiz[]){
+        setQuizzes(quizzes)
+    }
   return (
     <>
         <div>
@@ -52,8 +57,7 @@ export default function App() {
         {quizzes?.map(quiz =>{
           return (
               <>
-                <p> {quiz.question}</p>
-                <p> {quiz.answer}</p>
+                <QuizCard quiz={quiz} onUpdate={setNewQuizzes}/>
               </>
           )
         })}
