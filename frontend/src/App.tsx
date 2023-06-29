@@ -40,7 +40,7 @@ export default function App() {
         .catch(function (error) {
           console.log(error);
         });
-  }, [quizzes])
+  }, [])
 
     if(!quizzes)
         return <h1> ... loading </h1>
@@ -55,11 +55,7 @@ export default function App() {
         </div>
       <div>
         {quizzes?.map(quiz =>{
-          return (
-              <>
-                <QuizCard key={quiz.id} quiz={quiz} onUpdate={setNewQuizzes}/>
-              </>
-          )
+          return <QuizCard key={quiz.id} quiz={quiz} onUpdate={setNewQuizzes} />
         })}
       </div>
     </>
