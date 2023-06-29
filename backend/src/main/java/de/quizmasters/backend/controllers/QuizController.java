@@ -17,7 +17,7 @@ public class QuizController {
     }
 
     @GetMapping
-    public List<Quiz> getAll(){
+    public List<Quiz> getAll() {
         return quizService.getAllQuizzesService();
     }
 
@@ -26,6 +26,8 @@ public class QuizController {
         return quizService.addQuizService(newQuiz);
     }
 
-    @PutMapping
-    public List<Quiz> update( @RequestBody Quiz updatedQuiz){return quizService.updateQuizService(updatedQuiz);}
+    @PutMapping("{id}")
+    public Quiz update(@PathVariable String id, @RequestBody Quiz updatedQuiz) {
+        return quizService.updateQuiz(id, updatedQuiz);
+    }
 }

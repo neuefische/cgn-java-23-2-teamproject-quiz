@@ -1,7 +1,11 @@
 package de.quizmasters.backend.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Quiz {
 
@@ -9,9 +13,4 @@ public class Quiz {
     private String question;
     private String answer;
 
-    public Quiz(String id, String question, String answer) {
-        this.id = id;
-        this.question = question;
-        this.answer = answer;
-    }
 }

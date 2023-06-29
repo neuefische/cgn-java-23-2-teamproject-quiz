@@ -4,26 +4,34 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class QuizRepo {
-     private final List<Quiz> quizList=new ArrayList<>(List.of(
-            new Quiz("1", "Sind Giraffen größer als Hunde?", "Ja"),
-            new Quiz("2", "Sind Hunde schneller als Schnecken?", "Ja")
+    private final List<Quiz> quizList = new ArrayList<>(List.of(
+            new Quiz( "123","Sind Giraffen größer als Hunde?", "Ja"),
+            new Quiz("456","Sind Hunde schneller als Schnecken?", "Ja")
     ));
-    public List<Quiz> getAllQuizzes(){
+
+    public List<Quiz> getAllQuizzes() {
         return quizList;
     }
 
-    public List<Quiz> addQuiz(Quiz newQuiz){
+    public List<Quiz> addQuiz(Quiz newQuiz) {
+        newQuiz.setId(IdService.uuid());
         quizList.add(newQuiz);
         return quizList;
     }
 
-    public List<Quiz> updateQuiz(Quiz updatedQuiz){
-         List<Quiz> quizToUpdate = quizList.stream().filter(quiz -> quiz.getId().equals(updatedQuiz.getId())).toList();
-         quizToUpdate.get(0).setAnswer(updatedQuiz.getAnswer());
-        quizToUpdate.get(0).setQuestion(updatedQuiz.getQuestion());
-        return quizList;
+    public Quiz updateQuiz(String id, Quiz updatedQuiz) {
+        Optional<Quiz> quizToUpdate = quizList.stream().filter(quiz -> id.equals(quiz.getId())).findFirst();
+        if (quizToUpdate.isPresent()) {
+            Quiz quiz = quizToUpdate.get();
+            quiz.setQuestion(updatedQuiz.getQuestion());
+            quiz.setAnswer(updatedQuiz.getAnswer());
+            return quiz;
+        } else {
+            throw new NullPointerException("Quiz not found");
+        }
     }
 }

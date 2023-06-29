@@ -16,8 +16,8 @@ class QuizServiceTest {
     @Test
     void getsListOfQuizzes_whenGetAllQuizzesIsCalled() {
         //GIVEN
-        Quiz testQuiz1 = new Quiz("1", "Sind Giraffen größer als Hunde?", "Ja");
-        Quiz testQuiz2 = new Quiz("2", "Sind Hunde schneller als Schnecken?", "Ja");
+        Quiz testQuiz1 = new Quiz( "Sind Giraffen größer als Hunde?", "Ja");
+        Quiz testQuiz2 = new Quiz("Sind Hunde schneller als Schnecken?", "Ja");
         List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, testQuiz2));
         //WHEN
         when(quizRepo.getAllQuizzes()).thenReturn(expectedList);
@@ -29,9 +29,9 @@ class QuizServiceTest {
     @Test
     void getNewQuizInList_whenAddQuizServiceIsCalled() {
         //GIVEN
-        Quiz newQuiz= new Quiz("3", "Welche Farben haben Zebras?", "Schwarz-Weiß");
-        Quiz testQuiz1 = new Quiz("1", "Sind Giraffen größer als Hunde?", "Ja");
-        Quiz testQuiz2 = new Quiz("2", "Sind Hunde schneller als Schnecken?", "Ja");
+        Quiz newQuiz= new Quiz("Welche Farben haben Zebras?", "Schwarz-Weiß");
+        Quiz testQuiz1 = new Quiz("Sind Giraffen größer als Hunde?", "Ja");
+        Quiz testQuiz2 = new Quiz( "Sind Hunde schneller als Schnecken?", "Ja");
         List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, testQuiz2, newQuiz));
         //WHEN
         when(quizRepo.addQuiz(newQuiz)).thenReturn(expectedList);
@@ -44,15 +44,14 @@ class QuizServiceTest {
     @Test
     void updateQuizInList_whenUpdateQuizServiceIsCalled() {
         //GIVEN
-        Quiz updatedQuiz= new Quiz("2", "Welches Tier hat Streifen?", "Zebra");
-        Quiz testQuiz1 = new Quiz("1", "Sind Giraffen größer als Hunde?", "Ja");
-        Quiz testQuiz2 = new Quiz("2", "Sind Hunde schneller als Schnecken?", "Ja");
-        List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, updatedQuiz));
+        Quiz updatedQuiz= new Quiz( "Welches Tier hat Streifen?", "Zebra");
+        Quiz testQuiz1 = new Quiz("Sind Giraffen größer als Hunde?", "Ja");
+        Quiz testQuiz2 = new Quiz("Sind Hunde schneller als Schnecken?", "Ja");
         //WHEN
-        when(quizRepo.updateQuiz(updatedQuiz)).thenReturn(expectedList);
-        List<Quiz> actualList = quizService.updateQuizService(updatedQuiz);
+        when(quizRepo.updateQuiz(updatedQuiz.getId(), updatedQuiz)).thenReturn(updatedQuiz);
+        Quiz actual = quizService.updateQuiz(updatedQuiz.getId(), updatedQuiz);
         //THEN
-        assertEquals(expectedList, actualList);
-        verify(quizRepo).updateQuiz(updatedQuiz);
+        assertEquals(updatedQuiz, actual);
+        verify(quizRepo).updateQuiz(updatedQuiz.getId(), updatedQuiz);
     }
 }
