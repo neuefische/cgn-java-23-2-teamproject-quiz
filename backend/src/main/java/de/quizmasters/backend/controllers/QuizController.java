@@ -25,4 +25,7 @@ public class QuizController {
     public List<Quiz> add(@RequestBody Quiz newQuiz) {
         return quizService.addQuizService(newQuiz);
     }
+
+    @PutMapping
+    public List<Quiz> update( @RequestBody Quiz updatedQuiz){return quizService.updateQuizService(updatedQuiz);}
 }

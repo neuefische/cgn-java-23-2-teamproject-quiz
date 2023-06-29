@@ -40,4 +40,19 @@ class QuizServiceTest {
         assertEquals(expectedList, actualList);
         verify(quizRepo).addQuiz(newQuiz);
     }
+
+    @Test
+    void updateQuizInList_whenUpdateQuizServiceIsCalled() {
+        //GIVEN
+        Quiz updatedQuiz= new Quiz("2", "Welches Tier hat Streifen?", "Zebra");
+        Quiz testQuiz1 = new Quiz("1", "Sind Giraffen größer als Hunde?", "Ja");
+        Quiz testQuiz2 = new Quiz("2", "Sind Hunde schneller als Schnecken?", "Ja");
+        List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, updatedQuiz));
+        //WHEN
+        when(quizRepo.updateQuiz(updatedQuiz)).thenReturn(expectedList);
+        List<Quiz> actualList = quizService.updateQuizService(updatedQuiz);
+        //THEN
+        assertEquals(expectedList, actualList);
+        verify(quizRepo).updateQuiz(updatedQuiz);
+    }
 }

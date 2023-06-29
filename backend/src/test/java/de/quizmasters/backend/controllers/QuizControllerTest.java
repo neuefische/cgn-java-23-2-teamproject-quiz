@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -47,6 +48,7 @@ class QuizControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void expectNewQuizInAll_whenAddNewQuiz() throws Exception {
 
         String expectedList = """
@@ -74,6 +76,37 @@ class QuizControllerTest {
                          "id": "3",
                          "question": "Welche Farben haben Zebras?",
                          "answer": "Schwarz-Weiß"   
+                        }
+""")
+                )
+
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(expectedList));
+    }
+
+    @Test
+    void expectUpdatedQuizInAll_whenUpdateQuiz() throws Exception {
+
+        String expectedList = """
+                    [
+                        {
+                         "question": "Welches Tier hat Streifen?",
+                         "answer": "Zebra"   
+                        },
+                        {
+                         "question": "Sind Hunde schneller als Schnecken?",
+                         "answer": "Ja"   
+                        }
+                    ]
+                """;
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/quiz")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                         "id": "1",
+                         "question": "Welches Tier hat Streifen?",
+                         "answer": "Zebra"   
                         }
 """)
                 )

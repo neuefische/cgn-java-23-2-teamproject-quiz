@@ -36,4 +36,14 @@ class QuizRepoTest {
         Assertions.assertTrue(actualList.contains(testQuiz));
     }
 
+    @Test
+    void updateQuiz_whenEditQuiz(){
+        //GIVEN
+        Quiz testQuiz= new Quiz("2", "Welches Tier hat Streifen?", "Zebra");
+        //WHEN
+        List<Quiz> actualList=quizRepo.updateQuiz(testQuiz);
+        //THEN
+        Assertions.assertTrue(actualList.contains(testQuiz));
+    }
+
 }

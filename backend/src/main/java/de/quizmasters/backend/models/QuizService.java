@@ -19,4 +19,6 @@ public class QuizService {
     public List<Quiz> addQuizService(Quiz newQuiz){
         return quizRepo.addQuiz(newQuiz);
     }
+
+    public List<Quiz> updateQuizService(Quiz updatedQuiz) {return quizRepo.updateQuiz(updatedQuiz);}
 }
