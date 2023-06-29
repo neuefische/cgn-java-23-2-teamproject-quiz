@@ -57,7 +57,7 @@ export default function App() {
         {quizzes?.map(quiz =>{
           return (
               <>
-                <QuizCard quiz={quiz} onUpdate={setNewQuizzes}/>
+                <QuizCard key={quiz.id} quiz={quiz} onUpdate={setNewQuizzes}/>
               </>
           )
         })}
