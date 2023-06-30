@@ -32,4 +32,14 @@ public class QuizService {
             throw new NullPointerException("Quiz not found");
         }
     }
+
+    public List<Quiz> deleteQuiz(String idToDelete) {
+        Optional<Quiz> quizToDelete = getQuizzes().stream().filter(quiz -> quiz.getId().equals(idToDelete)).findFirst();
+        if (quizToDelete.isPresent()) {
+            getQuizzes().remove(quizToDelete.get());
+            return getQuizzes();
+        } else {
+            throw new NullPointerException("Quiz not found");
+        }
+    }
 }
