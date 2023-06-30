@@ -49,70 +49,50 @@ class QuizControllerTest {
 
     @Test
     @DirtiesContext
-    void expectNewQuizInAll_whenAddNewQuiz() throws Exception {
+    void expectNewQuiz_whenAddNewQuiz() throws Exception {
 
-        String expectedList = """
-                    [
-                        {
-                            "question": "Sind Giraffen größer als Hunde?",
-                            "answer": "Ja"
-                        },
-                        
-                        {
-                         "question": "Sind Hunde schneller als Schnecken?",
-                         "answer": "Ja"   
-                        },
+        String expectedQuiz = """
                         {
                          "question": "Welche Farben haben Zebras?",
                          "answer": "Schwarz-Weiß"   
-                        }
-                    ]
+                       }
                 """;
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/quiz")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                        {
-                         "id": "3",
-                         "question": "Welche Farben haben Zebras?",
-                         "answer": "Schwarz-Weiß"   
-                        }
-""")
-                )
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                                        {
+                                                         "id": "3",
+                                                         "question": "Welche Farben haben Zebras?",
+                                                         "answer": "Schwarz-Weiß"   
+                                                        }
+                                """))
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(expectedList));
+                .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
     }
 
     @Test
-    void expectUpdatedQuizInAll_whenUpdateQuiz() throws Exception {
+    void expectUpdatedQuiz_whenUpdateQuiz() throws Exception {
 
-        String expectedList = """
-                    [
-                        {
-                         "question": "Welches Tier hat Streifen?",
-                         "answer": "Zebra"   
-                        },
-                        {
-                         "question": "Sind Hunde schneller als Schnecken?",
-                         "answer": "Ja"   
-                        }
-                    ]
+        String expectedQuiz = """
+                                            {
+                                             "id": "123",
+                                              "question": "Welches Tier hat Streifen?",
+                                                "answer": "Zebra"   
+                                                }
                 """;
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/quiz")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                        {
-                         "id": "1",
-                         "question": "Welches Tier hat Streifen?",
-                         "answer": "Zebra"   
-                        }
-""")
-                )
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/quiz/123")
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                                        {
+                                                         "id": "123",
+                                                         "question": "Welches Tier hat Streifen?",
+                                                         "answer": "Zebra"   
+                                                        }
+                                """))
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(expectedList));
+                .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
     }
 
 }

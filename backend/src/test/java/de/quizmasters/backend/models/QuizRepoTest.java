@@ -31,21 +31,21 @@ class QuizRepoTest {
     @Test
     void getNewQuizInList_whenAddQuizIsCalled(){
         //GIVEN
-        Quiz testQuiz= new Quiz("Welche Farben haben Zebras?", "Schwarz-Weiß");
+        Quiz addedQuiz= new Quiz("789","Welche Farben haben Zebras?", "Schwarz-Weiß");
         //WHEN
-        List<Quiz> actualList=quizRepo.addQuiz(testQuiz);
+        Quiz actualQuiz =quizRepo.addQuiz(addedQuiz);
         //THEN
-        Assertions.assertTrue(actualList.contains(testQuiz));
+        Assertions.assertEquals(addedQuiz, actualQuiz);
     }
 
     @Test
     void updateQuiz_whenEditQuiz(){
         //GIVEN
-        Quiz testQuiz= new Quiz("Welches Tier hat Streifen?", "Zebra");
+        Quiz expectedQuiz= new Quiz("123","Welches Tier hat Streifen?", "Zebra");
         //WHEN
-        Quiz actual=quizRepo.updateQuiz(testQuiz.getId(),testQuiz);
+        Quiz actualQuiz=quizRepo.updateQuiz("123",expectedQuiz);
         //THEN
-        Assertions.assertEquals(testQuiz, actual);
+        Assertions.assertEquals(expectedQuiz, actualQuiz);
     }
 
 }

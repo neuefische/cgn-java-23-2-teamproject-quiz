@@ -3,3 +3,8 @@ export type Quiz= {
     question: string,
     answer: string,
 }
+
+export type DtoQuiz = {
+    question: string,
+    answer: string,
+}

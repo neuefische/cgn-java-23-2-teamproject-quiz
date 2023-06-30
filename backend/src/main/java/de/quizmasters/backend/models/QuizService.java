@@ -12,11 +12,11 @@ public class QuizService {
 
     private final QuizRepo quizRepo;
 
-    public List<Quiz> getAllQuizzesService() {
-        return quizRepo.getAllQuizzes();
+    public List<Quiz> getQuizzes() {
+        return quizRepo.getQuizzes();
     }
 
-    public List<Quiz> addQuizService(Quiz newQuiz) {
+    public Quiz addQuiz(Quiz newQuiz) {
         return quizRepo.addQuiz(newQuiz);
     }
 

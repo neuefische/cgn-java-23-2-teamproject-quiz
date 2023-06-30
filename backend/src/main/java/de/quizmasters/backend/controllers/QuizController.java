@@ -17,13 +17,13 @@ public class QuizController {
     }
 
     @GetMapping
-    public List<Quiz> getAll() {
-        return quizService.getAllQuizzesService();
+    public List<Quiz> getQuizzes() {
+        return quizService.getQuizzes();
     }
 
     @PostMapping
-    public List<Quiz> add(@RequestBody Quiz newQuiz) {
-        return quizService.addQuizService(newQuiz);
+    public Quiz add(@RequestBody Quiz newQuiz) {
+        return quizService.addQuiz(newQuiz);
     }
 
     @PutMapping("{id}")

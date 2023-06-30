@@ -1,6 +1,6 @@
 import './App.css'
 import {FormEvent, useEffect, useState} from "react";
-import {Quiz} from "./model/Quiz.tsx";
+import {DtoQuiz, Quiz} from "./model/Quiz.tsx";
 import axios from "axios";
 import Form from "./components/Form.tsx";
 import QuizCard from "./components/QuizCard.tsx";
@@ -20,8 +20,7 @@ export default function App() {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const newQuiz: Quiz = {
-            id: "" + quizzes?.length + 1,
+        const newQuiz: DtoQuiz = {
             question: question,
             answer: answer,
         }

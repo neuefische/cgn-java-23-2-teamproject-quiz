@@ -13,14 +13,14 @@ public class QuizRepo {
             new Quiz("456","Sind Hunde schneller als Schnecken?", "Ja")
     ));
 
-    public List<Quiz> getAllQuizzes() {
+    public List<Quiz> getQuizzes() {
         return quizList;
     }
 
-    public List<Quiz> addQuiz(Quiz newQuiz) {
+    public Quiz addQuiz(Quiz newQuiz) {
         newQuiz.setId(IdService.uuid());
         quizList.add(newQuiz);
-        return quizList;
+        return newQuiz;
     }
 
     public Quiz updateQuiz(String id, Quiz updatedQuiz) {
