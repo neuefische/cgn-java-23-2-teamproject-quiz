@@ -2,6 +2,7 @@ package de.quizmasters.backend.models;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ class QuizServiceTest {
     }
 
     @Test
+    @DirtiesContext
     void getNewQuiz_whenAddQuizIsCalled() {
         //GIVEN
         Quiz newQuiz = new Quiz("123", "Welche Farben haben Zebras?", "Schwarz-Weiß");
@@ -52,7 +54,7 @@ class QuizServiceTest {
         when(quizRepo.getQuizzes()).thenReturn(mockedList);
         Quiz actualQuiz = quizService.updateQuiz("123", updatedQuiz);
         //THEN
-        verify(quizRepo).getQuizzes();
+        verify(quizRepo,times(3)).getQuizzes();
         Assertions.assertEquals(updatedQuiz, actualQuiz);
     }
 
