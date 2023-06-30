@@ -1,5 +1,6 @@
 import {Quiz} from "../model/Quiz.tsx";
 import {FormEvent, useState} from "react";
+import {TextField} from "@mui/material";
 
 type Props = {
     quiz: Quiz,
@@ -41,7 +42,7 @@ function QuizCard(props: Props) {
 
 
     return (
-        <div>
+        <div className={"quizcard-container"}>
             {!editMode ?
                 <>
             <p> {props.quiz.question}</p>
@@ -50,17 +51,32 @@ function QuizCard(props: Props) {
                 </>
             :
                 <>
-                    <form onSubmit={handleUpdateQuiz}>
-                        <label>Edit Question:</label>
-                        <input type={"Text"} value={inputValue.question} onInput={handleInputQuestion}/>
-                        <label>Answer:</label>
-                        <input type={"Text"} value={inputValue.answer} onInput={handleInputAnswer} />
-                        <button>Save Changes</button>
+                    <form className={"editmode-card-container"} onSubmit={handleUpdateQuiz}>
+                        <h4>Edit:</h4>
+                        <TextField
+                            onInput={handleInputQuestion}
+                            value={inputValue.question}
+                            id="outlined-basic"
+                            color={"success"}
+                            label="Question"
+                            variant="outlined"
+                            required
+                        />
+                        <TextField
+                            onInput={handleInputAnswer}
+                            value={inputValue.answer}
+                            id="outlined-basic"
+                            color={"success"}
+                            label="Question"
+                            variant="outlined"
+                            required
+                        />
+                        <section className={"editmode-button-container"}>
+                            <button className={"editmode-card-button editmode-button"}>Save Changes</button>
+                            <button className={"editmode-button"} onClick={handleDeleteQuiz}>Delete</button>
+                        </section>
                     </form>
-                    <button onClick={handleDeleteQuiz}>Delete</button>
                 </>
-
-
             }
         </div>
     );
