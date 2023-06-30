@@ -47,14 +47,25 @@ export default function App() {
             });
     }
 
+    function deleteQuiz(quizToDelete: Quiz) {
+        axios.delete("/api/quiz/" + quizToDelete.id)
+            .then(function (response) {
+                console.log(response);
+                getAllQuizzes();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     return (
         <>
             <div>
                 <Form getAll={getAllQuizzes} onAdd={handleAddQuiz}/>
             </div>
             <div>
-                {quizzes?.map(quiz => {
-                    return <QuizCard key={quiz.id} quiz={quiz} onUpdate={updateQuiz}/>
+                {quizzes.map(quiz => {
+                    return <QuizCard key={quiz.id} quiz={quiz} onUpdate={updateQuiz} onDelete={deleteQuiz}/>
                 })}
             </div>
         </>
