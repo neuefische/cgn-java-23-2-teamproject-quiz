@@ -25,11 +25,9 @@ public class QuizService {
     public Quiz updateQuiz(String id, Quiz updatedQuiz) {
         Optional<Quiz> quizToUpdate = getQuizzes().stream().filter(quiz -> id.equals(quiz.getId())).findFirst();
         if (quizToUpdate.isPresent()) {
-            Quiz quiz = quizToUpdate.get();
-           // quiz = updatedQuiz;
-            quiz.setQuestion(updatedQuiz.getQuestion());
-           quiz.setAnswer(updatedQuiz.getAnswer());
-            return quiz;
+            getQuizzes().remove(quizToUpdate.get());
+            getQuizzes().add(updatedQuiz);
+            return updatedQuiz;
         } else {
             throw new NullPointerException("Quiz not found");
         }
