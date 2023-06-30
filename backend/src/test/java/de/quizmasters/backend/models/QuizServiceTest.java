@@ -20,10 +20,10 @@ class QuizServiceTest {
         Quiz testQuiz2 = new Quiz("456","Sind Hunde schneller als Schnecken?", "Ja");
         List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, testQuiz2));
         //WHEN
-        when(quizRepo.getAllQuizzes()).thenReturn(expectedList);
-        List<Quiz> actualList = quizService.getAllQuizzesService();
+        when(quizRepo.getQuizzes()).thenReturn(expectedList);
+        List<Quiz> actualList = quizService.getQuizzes();
         //THEN
-        verify(quizRepo).getAllQuizzes();
+        verify(quizRepo).getQuizzes();
         assertEquals(expectedList, actualList);
     }
     @Test

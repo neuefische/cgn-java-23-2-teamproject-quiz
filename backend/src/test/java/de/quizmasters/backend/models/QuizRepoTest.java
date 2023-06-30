@@ -23,7 +23,7 @@ class QuizRepoTest {
 
         //WHEN
 
-        List<Quiz> actualList = quizRepo.getAllQuizzes();
+        List<Quiz> actualList = quizRepo.getQuizzes();
         //THEN
         Assertions.assertEquals(expectedList, actualList);
 
