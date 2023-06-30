@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Repository
 public class QuizRepo {
@@ -17,21 +17,4 @@ public class QuizRepo {
         return quizList;
     }
 
-    public Quiz addQuiz(Quiz newQuiz) {
-        newQuiz.setId(IdService.uuid());
-        quizList.add(newQuiz);
-        return newQuiz;
-    }
-
-    public Quiz updateQuiz(String id, Quiz updatedQuiz) {
-        Optional<Quiz> quizToUpdate = quizList.stream().filter(quiz -> id.equals(quiz.getId())).findFirst();
-        if (quizToUpdate.isPresent()) {
-            Quiz quiz = quizToUpdate.get();
-            quiz.setQuestion(updatedQuiz.getQuestion());
-            quiz.setAnswer(updatedQuiz.getAnswer());
-            return quiz;
-        } else {
-            throw new NullPointerException("Quiz not found");
-        }
-    }
 }

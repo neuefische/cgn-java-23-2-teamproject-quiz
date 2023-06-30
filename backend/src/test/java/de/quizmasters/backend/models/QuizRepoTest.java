@@ -25,7 +25,7 @@ class QuizRepoTest {
         Assertions.assertEquals(expectedList, actualList);
 
     }
-    @Test
+    /*@Test
     void getNewQuizInList_whenAddQuizIsCalled(){
         //GIVEN
         Quiz addedQuiz= new Quiz("789","Welche Farben haben Zebras?", "Schwarz-Weiß");
@@ -33,9 +33,9 @@ class QuizRepoTest {
         Quiz actualQuiz =quizRepo.addQuiz(addedQuiz);
         //THEN
         Assertions.assertEquals(addedQuiz, actualQuiz);
-    }
+    }*/
 
-    @Test
+    /*@Test
     void updateQuiz_whenEditQuiz(){
         //GIVEN
         Quiz expectedQuiz= new Quiz("123","Welches Tier hat Streifen?", "Zebra");
@@ -43,13 +43,12 @@ class QuizRepoTest {
         Quiz actualQuiz=quizRepo.updateQuiz("123",expectedQuiz);
         //THEN
         Assertions.assertEquals(expectedQuiz, actualQuiz);
-    }
+    }*/
 
 
-
-    @Test
+    /*/@Test
     void expectNullPointerException_whenUpdateWithNonExistingId() {
         Quiz testQuiz= new Quiz("000", "Welches Tier hat Streifen?", "Zebra");
         Assertions.assertThrows(NullPointerException.class, () -> quizRepo.updateQuiz("000", testQuiz));
-    }
+    }*/
 }

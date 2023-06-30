@@ -1,5 +1,6 @@
 package de.quizmasters.backend.models;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -31,22 +32,31 @@ class QuizServiceTest {
         //GIVEN
         Quiz newQuiz= new Quiz("123","Welche Farben haben Zebras?", "Schwarz-Weiß");
         //WHEN
-        when(quizRepo.addQuiz(newQuiz)).thenReturn(newQuiz);
-        Quiz actualQuiz = quizService.addQuiz(newQuiz);
+        //when(quizRepo.addQuiz(newQuiz)).thenReturn(newQuiz);
+        //Quiz actualQuiz = quizService.addQuiz(newQuiz);
+        Quiz actualQuiz=quizService.addQuiz(newQuiz);
         //THEN
-        verify(quizRepo).addQuiz(newQuiz);
-        assertEquals(newQuiz, actualQuiz);
+        //verify(quizRepo).addQuiz(newQuiz);
+        //assertEquals(newQuiz, actualQuiz);
+        Assertions.assertEquals(newQuiz, actualQuiz);
     }
 
     @Test
     void updateQuiz_whenUpdateQuizIsCalled() {
         //GIVEN
         Quiz updatedQuiz= new Quiz( "123","Welches Tier hat Streifen?", "Zebra");
+        List<Quiz> mockedList = new ArrayList<>(List.of(updatedQuiz));
         //WHEN
-        when(quizRepo.updateQuiz(updatedQuiz.getId(), updatedQuiz)).thenReturn(updatedQuiz);
-        Quiz actual = quizService.updateQuiz(updatedQuiz.getId(), updatedQuiz);
+        when(quizRepo.getQuizzes()).thenReturn(mockedList);
+        Quiz actualQuiz=quizService.updateQuiz("123", updatedQuiz);
         //THEN
-        verify(quizRepo).updateQuiz(updatedQuiz.getId(), updatedQuiz);
-        assertEquals(updatedQuiz, actual);
+        verify(quizRepo).getQuizzes();
+        Assertions.assertEquals(updatedQuiz, actualQuiz);
+    }
+
+    @Test
+    void expectNullPointerException_whenUpdateWithNonExistingId() {
+        Quiz testQuiz= new Quiz("000", "Welches Tier hat Streifen?", "Zebra");
+        Assertions.assertThrows(NullPointerException.class, () -> quizService.updateQuiz("000", testQuiz));
     }
 }
