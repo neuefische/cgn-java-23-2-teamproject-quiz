@@ -1,5 +1,8 @@
 import {FormEvent, useState} from "react";
 import {DtoQuiz} from "../model/Quiz.tsx";
+import {IconButton, TextField} from "@mui/material";
+import {AddCircle} from "@mui/icons-material";
+
 
 type Props = {
     getAll: () => void;
@@ -22,12 +25,30 @@ export default function Form(props: Props) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>Question:</label>
-            <input onChange={e => setQuestion(e.target.value)} value={question}/>
-            <label>Answer:</label>
-            <input onChange={e => setAnswer(e.target.value)} value={answer}/>
-            <button>Add Quiz</button>
+        <form className={"form-container"} onSubmit={handleSubmit}>
+            <TextField
+                onChange={e => setQuestion(e.target.value)}
+                value={question}
+                id="outlined-basic"
+                color={"success"}
+                label="Question"
+                variant="outlined"
+                required
+            />
+            <TextField
+                onChange={e => setAnswer(e.target.value)}
+                value={answer}
+                id="outlined-basic"
+                label="Answer"
+                variant="outlined"
+                required
+            />
+            <section>
+                <IconButton type={"submit"} color="primary" aria-label="add an alarm">
+                    <AddCircle/>
+                </IconButton>
+            </section>
+
         </form>
     );
 }
