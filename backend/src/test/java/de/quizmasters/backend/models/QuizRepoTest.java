@@ -45,4 +45,14 @@ class QuizRepoTest {
         Assertions.assertEquals(expectedQuiz, actualQuiz);
     }
 
+
+
+    @Test
+    public void expectNullPointerException_whenUpdateWithNonExistingId() {
+        Quiz testQuiz= new Quiz("000", "Welches Tier hat Streifen?", "Zebra");
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            quizRepo.updateQuiz(null, testQuiz);
+        });
+    }
+
 }
