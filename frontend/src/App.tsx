@@ -22,7 +22,7 @@ export default function App() {
 
     if (!quizzes)
         return <h1> ... loading </h1>
-    
+
 
     function handleAddQuiz(newQuiz: DtoQuiz) {
 
