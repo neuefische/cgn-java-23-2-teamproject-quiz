@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.Mockito.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class QuizRepoTest {
 
     QuizRepo quizRepo = new QuizRepo();
-    IdService idService = mock(IdService.class);
+
     @Test
     void getList_whenGetAllQuizzesIsCalled() {
         //GIVEN
