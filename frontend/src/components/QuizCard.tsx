@@ -24,20 +24,6 @@ function QuizCard(props: Props) {
         setInputValue({...inputValue, answer: event.currentTarget.value})
     }
 
-    function handleUpdateQuiz(){
-        axios.put("/api/quiz", {
-            id: props.quiz.id,
-            question: inputValue.question,
-            answer: inputValue.answer
-        })
-            .then(function (response) {
-                console.log(response);
-                props.onUpdate(response.data)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
 
     return (
         <div>
