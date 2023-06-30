@@ -1,10 +1,9 @@
 import {Quiz} from "../model/Quiz.tsx";
 import {FormEvent, useState} from "react";
-import axios from "axios";
 
 type Props = {
     quiz: Quiz,
-    onUpdate: (data: Quiz[]) => void
+    onUpdate: (quiz: Quiz) => void,
 }
 function QuizCard(props: Props) {
     const[editMode, setEditMode] = useState(false)
@@ -22,6 +21,17 @@ function QuizCard(props: Props) {
 
     function handleInputAnswer(event:FormEvent<HTMLInputElement> ){
         setInputValue({...inputValue, answer: event.currentTarget.value})
+    }
+    function handleUpdateQuiz(event: FormEvent<HTMLFormElement>){
+        event.preventDefault()
+        const newQuiz: Quiz = {
+            id: props.quiz.id,
+            question: inputValue.question,
+            answer: inputValue.answer,
+        }
+
+        props.onUpdate(newQuiz)
+        handleEditMode()
     }
 
 
