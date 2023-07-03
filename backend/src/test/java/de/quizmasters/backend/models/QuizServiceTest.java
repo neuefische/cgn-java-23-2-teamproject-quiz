@@ -31,7 +31,6 @@ class QuizServiceTest {
     }
 
     @Test
-    @DirtiesContext
     void getNewQuiz_whenAddQuizIsCalled() {
         //GIVEN
         Quiz newQuiz = new Quiz("123", "Welche Farben haben Zebras?", "Schwarz-Weiß");
