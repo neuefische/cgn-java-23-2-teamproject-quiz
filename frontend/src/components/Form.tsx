@@ -17,16 +17,17 @@ export default function Form(props: Props) {
             answer: answer,
         }
         props.onAdd(newQuiz);
-
+        setQuestion("")
+        setAnswer("")
     }
+
     return (
         <form onSubmit={handleSubmit}>
             <label>Question:</label>
-            <input onChange={e => setQuestion(e.target.value)} value={question} placeholder={"Frage"}/>
+            <input onChange={e => setQuestion(e.target.value)} value={question}/>
             <label>Answer:</label>
-            <input onChange={e => setAnswer(e.target.value)} value={answer} placeholder={"Antwort"}/>
+            <input onChange={e => setAnswer(e.target.value)} value={answer}/>
             <button>Add Quiz</button>
-
         </form>
     );
 }

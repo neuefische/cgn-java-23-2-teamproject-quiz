@@ -26,8 +26,14 @@ public class QuizController {
         return quizService.addQuiz(newQuiz);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public Quiz update(@PathVariable String id, @RequestBody Quiz updatedQuiz) {
         return quizService.updateQuiz(id, updatedQuiz);
     }
+
+    @DeleteMapping("/{id}")
+    public List<Quiz> delete(@PathVariable String id) {
+        return quizService.deleteQuiz(id);
+    }
+
 }

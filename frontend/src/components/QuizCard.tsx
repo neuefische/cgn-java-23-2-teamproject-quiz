@@ -4,6 +4,7 @@ import {FormEvent, useState} from "react";
 type Props = {
     quiz: Quiz,
     onUpdate: (quiz: Quiz) => void,
+    onDelete: (quiz: Quiz) => void
 }
 function QuizCard(props: Props) {
     const[editMode, setEditMode] = useState(false)
@@ -34,6 +35,10 @@ function QuizCard(props: Props) {
         handleEditMode()
     }
 
+    function handleDeleteQuiz() {
+        props.onDelete(props.quiz)
+    }
+
 
     return (
         <div>
@@ -44,13 +49,18 @@ function QuizCard(props: Props) {
             <button onClick={handleEditMode}>Edit</button>
                 </>
             :
-            <form onSubmit={handleUpdateQuiz}>
-                <label>Edit Question:</label>
-                <input type={"Text"} value={inputValue.question} onInput={handleInputQuestion}/>
-                <label>Answer:</label>
-                <input type={"Text"} value={inputValue.answer} onInput={handleInputAnswer} />
-                <button>Save Changes</button>
-            </form>
+                <>
+                    <form onSubmit={handleUpdateQuiz}>
+                        <label>Edit Question:</label>
+                        <input type={"Text"} value={inputValue.question} onInput={handleInputQuestion}/>
+                        <label>Answer:</label>
+                        <input type={"Text"} value={inputValue.answer} onInput={handleInputAnswer} />
+                        <button>Save Changes</button>
+                    </form>
+                    <button onClick={handleDeleteQuiz}>Delete</button>
+                </>
+
+
             }
         </div>
     );

@@ -86,4 +86,25 @@ class QuizControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
     }
 
+    @Test
+    void expectListWithoutQuizToDelete_whenDeleteQuiz() throws Exception {
+
+        String expectedList = """
+                                          [
+                                                {
+                                                     "id": "456",
+                                                     "question": "Sind Hunde schneller als Schnecken?",
+                                                     "answer": "Ja"   
+                                                }
+                                          ]
+                                            
+                """;
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/quiz/123"))
+
+
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(expectedList));
+    }
+
 }
