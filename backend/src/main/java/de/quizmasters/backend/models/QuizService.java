@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class QuizService {
             getQuizzes().set(index, updatedQuiz);
             return updatedQuiz;
         } else {
-            throw new NullPointerException("Quiz not found");
+            throw new NoSuchElementException("Quiz not found");
         }
     }
 
@@ -39,7 +40,7 @@ public class QuizService {
             getQuizzes().remove(quizToDelete.get());
             return getQuizzes();
         } else {
-            throw new NullPointerException("Quiz not found");
+            throw new NoSuchElementException("Quiz not found");
         }
     }
 }
