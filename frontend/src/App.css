@@ -4,3 +4,35 @@
   padding: 2rem;
   text-align: center;
 }
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quizcard-container {
+  border: 1px solid black;
+  border-radius: 15px;
+  background-color: #cebbaf;
+  padding: 15px;
+  margin: 10px;
+  -webkit-box-shadow: 6px 9px 15px 2px rgba(0,0,0,0.73);
+  box-shadow: 6px 9px 15px 2px rgba(0,0,0,0.73);
+}
+
+.editmode-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.editmode-card-button {
+  width: 150px;
+}
+
+.editmode-button-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}

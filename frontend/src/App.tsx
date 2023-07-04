@@ -51,6 +51,7 @@ export default function App() {
 
     return (
         <>
+            <h1>Welcome!</h1>
             <div>
                 <Form getAll={getAllQuizzes} onAdd={handleAddQuiz}/>
             </div>
