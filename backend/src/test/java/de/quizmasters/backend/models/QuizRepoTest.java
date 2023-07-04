@@ -13,8 +13,22 @@ class QuizRepoTest {
     @Test
     void getList_whenGetAllQuizzesIsCalled() {
         //GIVEN
-        Quiz testQuiz1 = new Quiz("123","Sind Giraffen größer als Hunde?", "Ja");
-        Quiz testQuiz2 = new Quiz( "456","Sind Hunde schneller als Schnecken?", "Ja");
+
+        Quiz testQuiz1= new Quiz( "123","Sind Giraffen größer als Hunde?", new ArrayList<>( List.of(
+                new Answer("Ja", true),
+                new Answer("Nein", false),
+                new Answer("Vielleicht", false),
+                new Answer("Keine Ahnung", false)
+        )));
+        Quiz testQuiz2= new Quiz( "456","Sind Hunde schneller als Schnecken?", new ArrayList<>( List.of(
+                        new Answer("Ja", true),
+                        new Answer("Nein", false),
+                        new Answer("Vielleicht", false),
+                        new Answer("Keine Ahnung", false)
+        )));
+
+        //Quiz testQuiz1 = new Quiz("123","Sind Giraffen größer als Hunde?", "Ja");
+        //Quiz testQuiz2 = new Quiz( "456","Sind Hunde schneller als Schnecken?", "Ja");
 
         List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, testQuiz2));
 
