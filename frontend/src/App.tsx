@@ -35,7 +35,10 @@ export default function App() {
 
     function updateQuiz(updateQuiz: Quiz) {
         axios.put("/api/quiz/" + updateQuiz.id, updateQuiz)
-            .then(() => getAllQuizzes())
+            .then((response) => {
+                console.log(response.data)
+                getAllQuizzes()
+            })
             .catch(function (error) {
                 console.error(error);
             });

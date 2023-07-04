@@ -1,5 +1,5 @@
 import {Quiz} from "../model/Quiz.tsx";
-import {FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {TextField} from "@mui/material";
 
 type Props = {
@@ -7,31 +7,33 @@ type Props = {
     onUpdate: (quiz: Quiz) => void,
     onDelete: (quiz: Quiz) => void
 }
+
 function QuizCard(props: Props) {
-    const[editMode, setEditMode] = useState(false)
-    const[inputValue, setInputValue] = useState({
+    const [editMode, setEditMode] = useState(false)
+    const [inputValue, setInputValue] = useState({
         question: props.quiz.question,
         answer: props.quiz.answer
     })
-    function handleEditMode(){
+
+    function handleEditMode() {
         setEditMode(!editMode)
     }
 
-    function handleInputQuestion(event:FormEvent<HTMLInputElement> ){
-        setInputValue({...inputValue, question: event.currentTarget.value})
+    function handleInputQuestion(event: ChangeEvent<HTMLInputElement>) {
+        setInputValue({...inputValue, question: event.target.value})
     }
 
-    function handleInputAnswer(event:FormEvent<HTMLInputElement> ){
-        setInputValue({...inputValue, answer: event.currentTarget.value})
+    function handleInputAnswer(event: ChangeEvent<HTMLInputElement>) {
+        setInputValue({...inputValue, answer: event.target.value})
     }
-    function handleUpdateQuiz(event: FormEvent<HTMLFormElement>){
+
+    function handleUpdateQuiz(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         const newQuiz: Quiz = {
             id: props.quiz.id,
             question: inputValue.question,
             answer: inputValue.answer,
         }
-
         props.onUpdate(newQuiz)
         handleEditMode()
     }
@@ -45,16 +47,16 @@ function QuizCard(props: Props) {
         <div className={"quizcard-container"}>
             {!editMode ?
                 <>
-            <p> {props.quiz.question}</p>
-            <p> {props.quiz.answer}</p>
-            <button onClick={handleEditMode}>Edit</button>
+                    <p> {props.quiz.question}</p>
+                    <p> {props.quiz.answer}</p>
+                    <button onClick={handleEditMode}>Edit</button>
                 </>
-            :
+                :
                 <>
                     <form className={"editmode-card-container"} onSubmit={handleUpdateQuiz}>
                         <h4>Edit:</h4>
                         <TextField
-                            onInput={handleInputQuestion}
+                            onChange={handleInputQuestion}
                             value={inputValue.question}
                             id="outlined-basic"
                             color={"success"}
@@ -63,11 +65,11 @@ function QuizCard(props: Props) {
                             required
                         />
                         <TextField
-                            onInput={handleInputAnswer}
+                            onChange={handleInputAnswer}
                             value={inputValue.answer}
                             id="outlined-basic"
                             color={"success"}
-                            label="Question"
+                            label="Answer"
                             variant="outlined"
                             required
                         />
