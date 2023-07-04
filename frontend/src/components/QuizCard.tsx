@@ -12,7 +12,11 @@ function QuizCard(props: Props) {
     const [editMode, setEditMode] = useState(false)
     const [inputValue, setInputValue] = useState({
         question: props.quiz.question,
-        answer: props.quiz.answer
+
+        answer1:props.quiz.answers[0],
+        answer2:props.quiz.answers[1],
+        answer3:props.quiz.answers[2],
+        answer4:props.quiz.answers[3],
     })
 
     function handleEditMode() {
@@ -23,8 +27,17 @@ function QuizCard(props: Props) {
         setInputValue({...inputValue, question: event.target.value})
     }
 
-    function handleInputAnswer(event: ChangeEvent<HTMLInputElement>) {
-        setInputValue({...inputValue, answer: event.target.value})
+    function handleInputAnswer1(event: ChangeEvent<HTMLInputElement>) {
+        setInputValue({...inputValue, answer1:{...inputValue.answer1, answer: event.target.value}})
+    }
+    function handleInputAnswer2(event: ChangeEvent<HTMLInputElement>) {
+        setInputValue({...inputValue, answer2:{...inputValue.answer2, answer: event.target.value}})
+    }
+    function handleInputAnswer3(event: ChangeEvent<HTMLInputElement>) {
+        setInputValue({...inputValue, answer3:{...inputValue.answer3, answer: event.target.value}})
+    }
+    function handleInputAnswer4(event: ChangeEvent<HTMLInputElement>) {
+        setInputValue({...inputValue, answer4:{...inputValue.answer4, answer: event.target.value}})
     }
 
     function handleUpdateQuiz(event: FormEvent<HTMLFormElement>) {
@@ -48,7 +61,10 @@ function QuizCard(props: Props) {
             {!editMode ?
                 <>
                     <p> {props.quiz.question}</p>
-                    <p> {props.quiz.answer}</p>
+                    <p> {props.quiz.answers[0].answer}</p>
+                    <p> {props.quiz.answers[1].answer}</p>
+                    <p> {props.quiz.answers[2].answer}</p>
+                    <p> {props.quiz.answers[3].answer}</p>
                     <button onClick={handleEditMode}>Edit</button>
                 </>
                 :
@@ -66,7 +82,37 @@ function QuizCard(props: Props) {
                         />
                         <TextField
                             onChange={handleInputAnswer}
-                            value={inputValue.answer}
+                            value={inputValue.answer1.answer}
+                            id="outlined-basic"
+                            color={"success"}
+                            label="Answer"
+                            variant="outlined"
+                            required
+                        />
+
+                        <TextField
+                            onChange={handleInputAnswer}
+                            value={inputValue.answer2.answer}
+                            id="outlined-basic"
+                            color={"success"}
+                            label="Answer"
+                            variant="outlined"
+                            required
+                        />
+
+                        <TextField
+                            onChange={handleInputAnswer}
+                            value={inputValue.answer3.answer}
+                            id="outlined-basic"
+                            color={"success"}
+                            label="Answer"
+                            variant="outlined"
+                            required
+                        />
+
+                        <TextField
+                            onChange={handleInputAnswer}
+                            value={inputValue.answer4.answer}
                             id="outlined-basic"
                             color={"success"}
                             label="Answer"
