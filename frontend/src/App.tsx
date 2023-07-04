@@ -12,11 +12,11 @@ export default function App() {
 
     function getAllQuizzes() {
         axios.get('/api/quiz')
-            .then(function (response) {
+            .then(response =>  {
                 setQuizzes(response.data);
             })
             .catch(function (error) {
-                console.log(error);
+                console.error(error);
             });
     }
 
@@ -27,34 +27,25 @@ export default function App() {
     function handleAddQuiz(newQuiz: DtoQuiz) {
 
         axios.post("/api/quiz", newQuiz)
-            .then(function (response) {
-                console.log(response)
-                getAllQuizzes()
-            })
+            .then(() => getAllQuizzes())
             .catch(function (error) {
-                console.log(error);
+                console.error(error);
             });
     }
 
     function updateQuiz(updateQuiz: Quiz) {
         axios.put("/api/quiz/" + updateQuiz.id, updateQuiz)
-            .then(function (response) {
-                console.log(response);
-                getAllQuizzes();
-            })
+            .then(() => getAllQuizzes())
             .catch(function (error) {
-                console.log(error);
+                console.error(error);
             });
     }
 
     function deleteQuiz(quizToDelete: Quiz) {
         axios.delete("/api/quiz/" + quizToDelete.id)
-            .then(function (response) {
-                console.log(response);
-                getAllQuizzes();
-            })
+            .then(() => getAllQuizzes())
             .catch(function (error) {
-                console.log(error);
+                console.error(error);
             });
     }
 

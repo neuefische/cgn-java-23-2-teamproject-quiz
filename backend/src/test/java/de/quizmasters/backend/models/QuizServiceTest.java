@@ -6,6 +6,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,7 +32,6 @@ class QuizServiceTest {
     }
 
     @Test
-    @DirtiesContext
     void getNewQuiz_whenAddQuizIsCalled() {
         //GIVEN
         Quiz newQuiz = new Quiz("123", "Welche Farben haben Zebras?", "Schwarz-Weiß");
@@ -59,9 +59,9 @@ class QuizServiceTest {
     }
 
     @Test
-    void expectNullPointerException_whenUpdateWithNonExistingId() {
+    void expectNoSuchElementException_whenUpdateWithNonExistingId() {
         Quiz testQuiz = new Quiz("000", "Welches Tier hat Streifen?", "Zebra");
-        Assertions.assertThrows(NullPointerException.class, () -> quizService.updateQuiz("000", testQuiz));
+        Assertions.assertThrows(NoSuchElementException.class, () -> quizService.updateQuiz("000", testQuiz));
     }
 
     @Test
@@ -81,7 +81,7 @@ class QuizServiceTest {
     }
 
     @Test
-    void expectNullPointerException_whenDeleteWithNonExistingId() {
-        Assertions.assertThrows(NullPointerException.class, () -> quizService.deleteQuiz("000"));
+    void expectNoSuchElementException_whenDeleteWithNonExistingId() {
+        Assertions.assertThrows(NoSuchElementException.class, () -> quizService.deleteQuiz("000"));
     }
 }
