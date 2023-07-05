@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -22,14 +23,22 @@ public class QuizService {
     }
 
     public Quiz updateQuiz(String id, Quiz updatedQuiz) {
-        quizRepo.findById(id).orElseThrow();
-        quizRepo.save(updatedQuiz);
-        return updatedQuiz;
+        try {
+            quizRepo.findById(id).orElseThrow();
+            quizRepo.save(updatedQuiz);
+            return updatedQuiz;
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException();
+        }
     }
 
     public List<Quiz> deleteQuiz(String idToDelete) {
-        quizRepo.findById(idToDelete).orElseThrow();
-        quizRepo.deleteById(idToDelete);
-        return getQuizzes();
+        try {
+            quizRepo.findById(idToDelete).orElseThrow();
+            quizRepo.deleteById(idToDelete);
+            return getQuizzes();
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException();
+        }
     }
 }
