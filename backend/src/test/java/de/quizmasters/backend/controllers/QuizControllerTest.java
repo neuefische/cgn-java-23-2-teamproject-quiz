@@ -66,24 +66,28 @@ class QuizControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void expectUpdatedQuiz_whenUpdateQuiz() throws Exception {
-
-        String expectedQuiz = """
+        Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja");
+        Quiz testQuiz2 = new Quiz("456", "Sind Hunde schneller als Schnecken?", "Ja");
+        quizService.addQuiz(testQuiz1);
+        quizService.addQuiz(testQuiz2);
+        String expectedQuiz = String.format("""
                                             {
-                                             "id": "123",
+                                             "id": "%s",
                                               "question": "Welches Tier hat Streifen?",
                                                 "answer": "Zebra"
                                                 }
-                """;
+                """, testQuiz1.getId());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/quiz/123")
-                        .contentType(MediaType.APPLICATION_JSON).content("""
+        mockMvc.perform(MockMvcRequestBuilders.put(String.format("/api/quiz/%s",testQuiz1.getId()))
+                        .contentType(MediaType.APPLICATION_JSON).content(String.format("""
                                                         {
-                                                         "id": "123",
+                                                         "id": "%s",
                                                          "question": "Welches Tier hat Streifen?",
                                                          "answer": "Zebra"
                                                         }
-                                """))
+                                """, testQuiz1.getId())))
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));

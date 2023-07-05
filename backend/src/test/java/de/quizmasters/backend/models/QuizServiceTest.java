@@ -46,6 +46,7 @@ class QuizServiceTest {
         //GIVEN
         Quiz updatedQuiz = new Quiz("123", "Welches Tier hat Streifen?", "Zebra");
         //WHEN
+        when(quizRepo.findById("123")).thenReturn(Optional.of(new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja")));
         when(quizRepo.save(updatedQuiz)).thenReturn(updatedQuiz);
         Quiz actualQuiz = quizService.updateQuiz("123", updatedQuiz);
         //THEN
