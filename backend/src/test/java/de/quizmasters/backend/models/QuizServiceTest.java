@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -46,7 +45,7 @@ class QuizServiceTest {
         //GIVEN
         Quiz updatedQuiz = new Quiz("123", "Welches Tier hat Streifen?", "Zebra");
         //WHEN
-        when(quizRepo.findById("123")).thenReturn(Optional.of(new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja")));
+        when(quizRepo.existsById("123")).thenReturn(true);
         when(quizRepo.save(updatedQuiz)).thenReturn(updatedQuiz);
         Quiz actualQuiz = quizService.updateQuiz("123", updatedQuiz);
         //THEN
@@ -66,7 +65,7 @@ class QuizServiceTest {
         // GIVEN
 
 
-        when(quizRepo.findById("123")).thenReturn(Optional.of(new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja")));
+        when(quizRepo.existsById("123")).thenReturn(true);
         doNothing().when(quizRepo).deleteById("123");
 
         // WHEN

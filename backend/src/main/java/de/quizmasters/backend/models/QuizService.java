@@ -23,22 +23,19 @@ public class QuizService {
     }
 
     public Quiz updateQuiz(String id, Quiz updatedQuiz) {
-        try {
-            quizRepo.findById(id).orElseThrow();
-            quizRepo.save(updatedQuiz);
-            return updatedQuiz;
-        } catch (NoSuchElementException e) {
+        if (!quizRepo.existsById(id)) {
             throw new NoSuchElementException();
         }
+        quizRepo.save(updatedQuiz);
+        return updatedQuiz;
     }
 
     public List<Quiz> deleteQuiz(String idToDelete) {
-        try {
-            quizRepo.findById(idToDelete).orElseThrow();
-            quizRepo.deleteById(idToDelete);
-            return getQuizzes();
-        } catch (NoSuchElementException e) {
+
+        if (!quizRepo.existsById(idToDelete)) {
             throw new NoSuchElementException();
         }
+        quizRepo.deleteById(idToDelete);
+        return getQuizzes();
     }
 }
