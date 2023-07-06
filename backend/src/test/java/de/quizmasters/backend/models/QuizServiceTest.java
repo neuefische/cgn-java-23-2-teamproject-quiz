@@ -33,10 +33,10 @@ class QuizServiceTest {
         )));
         List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, testQuiz2));
         //WHEN
-        when(quizRepo.getQuizzes()).thenReturn(expectedList);
+        when(quizRepo.findAll()).thenReturn(expectedList);
         List<Quiz> actualList = quizService.getQuizzes();
         //THEN
-        verify(quizRepo).getQuizzes();
+        verify(quizRepo).findAll();
         assertEquals(expectedList, actualList);
     }
 
@@ -50,12 +50,8 @@ class QuizServiceTest {
                 new Answer("Keine Ahnung", false)
         )));
         //WHEN
-        //when(quizRepo.addQuiz(newQuiz)).thenReturn(newQuiz);
-        //Quiz actualQuiz = quizService.addQuiz(newQuiz);
         Quiz actualQuiz = quizService.addQuiz(newQuiz);
         //THEN
-        //verify(quizRepo).addQuiz(newQuiz);
-        //assertEquals(newQuiz, actualQuiz);
         Assertions.assertEquals(newQuiz, actualQuiz);
     }
 
@@ -70,10 +66,11 @@ class QuizServiceTest {
         )));
         List<Quiz> mockedList = new ArrayList<>(List.of(updatedQuiz));
         //WHEN
-        when(quizRepo.getQuizzes()).thenReturn(mockedList);
+        when(quizRepo.existsById("123")).thenReturn(true);
+        when(quizRepo.save(updatedQuiz)).thenReturn(updatedQuiz);
         Quiz actualQuiz = quizService.updateQuiz("123", updatedQuiz);
         //THEN
-        verify(quizRepo,times(3)).getQuizzes();
+        verify(quizRepo).save(updatedQuiz);
         Assertions.assertEquals(updatedQuiz, actualQuiz);
     }
 
@@ -90,36 +87,19 @@ class QuizServiceTest {
 
     @Test
     void expectListWithoutQuizToDelete_whenDeleteIsCalled() {
-        //GIVEN
+        // GIVEN
 
-        List<Quiz> expectedListDeleted = new ArrayList<>(List.of(
-                new Quiz( "456","Sind Hunde schneller als Schnecken?", new ArrayList<>( List.of(
-                        new Answer("Ja", true),
-                        new Answer("Nein", false),
-                        new Answer("Vielleicht", false),
-                        new Answer("Keine Ahnung", false)
-                )))));
 
-        List<Quiz> expectedListAll = new ArrayList<>(List.of(
-                new Quiz( "123","Sind Giraffen größer als Hunde?", new ArrayList<>( List.of(
-                        new Answer("Ja", true),
-                        new Answer("Nein", false),
-                        new Answer("Vielleicht", false),
-                        new Answer("Keine Ahnung", false)
-                ))),
-                new Quiz( "456","Sind Hunde schneller als Schnecken?", new ArrayList<>( List.of(
-                        new Answer("Ja", true),
-                        new Answer("Nein", false),
-                        new Answer("Vielleicht", false),
-                        new Answer("Keine Ahnung", false)
-                )))));
+        when(quizRepo.existsById("123")).thenReturn(true);
+        doNothing().when(quizRepo).deleteById("123");
 
-        //WHEN
-        when(quizRepo.getQuizzes()).thenReturn(expectedListAll);
-        List<Quiz> actualList = quizService.deleteQuiz("123");
-        //THEN
-        Assertions.assertEquals(expectedListDeleted, actualList);
+        // WHEN
+        quizService.deleteQuiz("123");
+
+        // THEN
+        verify(quizRepo).deleteById("123");
     }
+
 
     @Test
     void expectNoSuchElementException_whenDeleteWithNonExistingId() {

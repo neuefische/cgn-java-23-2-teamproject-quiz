@@ -1,5 +1,6 @@
 package de.quizmasters.backend.controllers;
 
+import de.quizmasters.backend.models.Quiz;
 import de.quizmasters.backend.models.QuizService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,8 @@ class QuizControllerTest {
                 ]
                 """;
 
+        quizService.addQuiz(new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja"));
+        quizService.addQuiz(new Quiz("456", "Sind Hunde schneller als Schnecken?", "Ja"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/quiz"))
 
@@ -109,7 +112,6 @@ class QuizControllerTest {
                     }
                 """;
 
-
         mockMvc.perform(MockMvcRequestBuilders.post("/api/quiz")
                         .contentType(MediaType.APPLICATION_JSON).content("""
                                                                   {
@@ -140,6 +142,7 @@ class QuizControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void expectUpdatedQuiz_whenUpdateQuiz() throws Exception {
 
         String expectedQuiz= """
@@ -166,11 +169,22 @@ class QuizControllerTest {
                         ]
                     }
                 """;
+        Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja");
+        Quiz testQuiz2 = new Quiz("456", "Sind Hunde schneller als Schnecken?", "Ja");
+        quizService.addQuiz(testQuiz1);
+        quizService.addQuiz(testQuiz2);
+        String expectedQuiz = String.format("""
+                                            {
+                                             "id": "%s",
+                                              "question": "Welches Tier hat Streifen?",
+                                                "answer": "Zebra"
+                                                }
+                """, testQuiz1.getId());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/quiz/123")
-                        .contentType(MediaType.APPLICATION_JSON).content("""
+        mockMvc.perform(MockMvcRequestBuilders.put(String.format("/api/quiz/%s",testQuiz1.getId()))
+                        .contentType(MediaType.APPLICATION_JSON).content(String.format("""
                                                         {
-                        "id": "123",
+                        "id": "%s",
                         "question": "Welches Tier hat Streifen?",
                         "answers": [
                             {
@@ -191,7 +205,7 @@ class QuizControllerTest {
                             }
                         ]
                     }
-                                """))
+                                """, testQuiz1.getId()))
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
@@ -199,11 +213,14 @@ class QuizControllerTest {
 
     @Test
     void expectListWithoutQuizToDelete_whenDeleteQuiz() throws Exception {
-
-        String expectedList = """
+        Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja");
+        Quiz testQuiz2 = new Quiz("456", "Sind Hunde schneller als Schnecken?", "Ja");
+        quizService.addQuiz(testQuiz1);
+        quizService.addQuiz(testQuiz2);
+        String expectedList = String.format("""
                                           [
                                                 {
-                        "id": "456",
+                        "id": "%s",
                         "question": "Sind Hunde schneller als Schnecken?",
                         "answers": [
                             {
@@ -226,9 +243,10 @@ class QuizControllerTest {
                     }
                                           ]
                                             
-                """;
+                """, testQuiz2.getId();
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/quiz/123"))
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/api/quiz/%s", testQuiz1.getId())))
 
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
