@@ -2,7 +2,6 @@ package de.quizmasters.backend.models;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +23,10 @@ class QuizServiceTest {
         Quiz testQuiz2 = new Quiz("456", "Sind Hunde schneller als Schnecken?", "Ja");
         List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, testQuiz2));
         //WHEN
-        when(quizRepo.getQuizzes()).thenReturn(expectedList);
+        when(quizRepo.findAll()).thenReturn(expectedList);
         List<Quiz> actualList = quizService.getQuizzes();
         //THEN
-        verify(quizRepo).getQuizzes();
+        verify(quizRepo).findAll();
         assertEquals(expectedList, actualList);
     }
 
@@ -36,12 +35,8 @@ class QuizServiceTest {
         //GIVEN
         Quiz newQuiz = new Quiz("123", "Welche Farben haben Zebras?", "Schwarz-Weiß");
         //WHEN
-        //when(quizRepo.addQuiz(newQuiz)).thenReturn(newQuiz);
-        //Quiz actualQuiz = quizService.addQuiz(newQuiz);
         Quiz actualQuiz = quizService.addQuiz(newQuiz);
         //THEN
-        //verify(quizRepo).addQuiz(newQuiz);
-        //assertEquals(newQuiz, actualQuiz);
         Assertions.assertEquals(newQuiz, actualQuiz);
     }
 
@@ -49,12 +44,12 @@ class QuizServiceTest {
     void updateQuiz_whenUpdateQuizIsCalled() {
         //GIVEN
         Quiz updatedQuiz = new Quiz("123", "Welches Tier hat Streifen?", "Zebra");
-        List<Quiz> mockedList = new ArrayList<>(List.of(updatedQuiz));
         //WHEN
-        when(quizRepo.getQuizzes()).thenReturn(mockedList);
+        when(quizRepo.existsById("123")).thenReturn(true);
+        when(quizRepo.save(updatedQuiz)).thenReturn(updatedQuiz);
         Quiz actualQuiz = quizService.updateQuiz("123", updatedQuiz);
         //THEN
-        verify(quizRepo,times(3)).getQuizzes();
+        verify(quizRepo).save(updatedQuiz);
         Assertions.assertEquals(updatedQuiz, actualQuiz);
     }
 
@@ -64,21 +59,22 @@ class QuizServiceTest {
         Assertions.assertThrows(NoSuchElementException.class, () -> quizService.updateQuiz("000", testQuiz));
     }
 
+
     @Test
     void expectListWithoutQuizToDelete_whenDeleteIsCalled() {
-        //GIVEN
-        List<Quiz> expectedListDeleted = new ArrayList<>(List.of(
-                new Quiz("456", "Sind Hunde schneller als Schnecken?", "Ja")));
+        // GIVEN
 
-        List<Quiz> expectedListAll = new ArrayList<>(List.of(
-                new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja"),
-                new Quiz("456", "Sind Hunde schneller als Schnecken?", "Ja")));
-        //WHEN
-        when(quizRepo.getQuizzes()).thenReturn(expectedListAll);
-        List<Quiz> actualList = quizService.deleteQuiz("123");
-        //THEN
-        Assertions.assertEquals(expectedListDeleted, actualList);
+
+        when(quizRepo.existsById("123")).thenReturn(true);
+        doNothing().when(quizRepo).deleteById("123");
+
+        // WHEN
+        quizService.deleteQuiz("123");
+
+        // THEN
+        verify(quizRepo).deleteById("123");
     }
+
 
     @Test
     void expectNoSuchElementException_whenDeleteWithNonExistingId() {
