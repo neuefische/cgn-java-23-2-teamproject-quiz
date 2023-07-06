@@ -16,5 +16,4 @@ public class Quiz {
     private String id;
     private String question;
     private String answer;
-
 }
