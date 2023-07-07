@@ -1,8 +1,12 @@
-import {FormEvent, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {DtoQuiz} from "../model/Quiz.tsx";
 import {IconButton, TextField} from "@mui/material";
 import {AddCircle} from "@mui/icons-material";
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import delay from 'delay';
+
 
 type Props = {
     getAll: () => void;
@@ -16,6 +20,7 @@ export default function Form(props: Props) {
     const navigate = useNavigate();
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        delayedExecution();
         const newQuiz: DtoQuiz = {
             question: question,
             answer: answer,
@@ -23,8 +28,27 @@ export default function Form(props: Props) {
         props.onAdd(newQuiz);
         setQuestion("")
         setAnswer("")
-        navigate("/all-quizzes")
+
     }
+
+
+    const delayedExecution = async () => {
+        toast.success("Success",  {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        })
+        await delay(2000); // Delay of 2000 milliseconds (2 seconds)
+        navigate("/all-quizzes")
+    };
+
+
+
 
     return (<>
             <h1>Add a Quiz:</h1>
@@ -52,6 +76,7 @@ export default function Form(props: Props) {
                     </IconButton>
                 </section>
             </form>
+            <ToastContainer />
     </>
 
     );
