@@ -1,6 +1,7 @@
 import {Quiz} from "../model/Quiz.tsx";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {TextField} from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
 
 type Props = {
     quiz: Quiz,
@@ -36,10 +37,30 @@ function QuizCard(props: Props) {
         }
         props.onUpdate(newQuiz)
         handleEditMode()
+        toast.info("Updated Quiz!",  {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        })
     }
 
     function handleDeleteQuiz() {
         props.onDelete(props.quiz)
+        toast.error("Quiz is deleted!",  {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        })
     }
 
 
@@ -82,6 +103,7 @@ function QuizCard(props: Props) {
                     </section>
                 </>
             }
+            <ToastContainer/>
         </div>
     );
 }
