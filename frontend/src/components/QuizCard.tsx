@@ -39,7 +39,7 @@ function QuizCard(props: Props) {
         handleEditMode()
         toast.info("Updated Quiz!",  {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
@@ -53,7 +53,7 @@ function QuizCard(props: Props) {
         props.onDelete(props.quiz)
         toast.error("Quiz is deleted!",  {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
