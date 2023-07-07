@@ -90,7 +90,7 @@ function QuizCard(props: Props) {
                     <p> {props.quiz.question}</p>
                     {props.quiz.answers.map(answer => {
                         return (
-                            <p>{answer.answer} {answer.rightAnswer ? "✅":"❌"}</p>
+                            <p key={answer.answer}>{answer.answer} {answer.rightAnswer ? "✅":"❌"}</p>
                         )
                     })}
                     <button onClick={handleEditMode}>Edit</button>
