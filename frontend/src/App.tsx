@@ -4,6 +4,9 @@ import {Quiz, DtoQuiz} from "./model/Quiz.tsx";
 import axios from "axios";
 import Form from "./components/Form.tsx";
 import QuizCard from "./components/QuizCard.tsx";
+import {Routes, Route} from "react-router-dom";
+import LandingPage from "./components/LandingPage.tsx";
+import AllQuizzes from "./components/AllQuizzes.tsx";
 
 export default function App() {
     const [quizzes, setQuizzes] = useState<Quiz[]>()
@@ -54,15 +57,20 @@ export default function App() {
 
     return (
         <>
-            <h1>Welcome!</h1>
-            <div>
-                <Form getAll={getAllQuizzes} onAdd={handleAddQuiz}/>
-            </div>
-            <div>
-                {quizzes.map(quiz => {
-                    return <QuizCard key={quiz.id} quiz={quiz} onUpdate={updateQuiz} onDelete={deleteQuiz}/>
-                })}
-            </div>
+            <Routes>
+                <Route path={"/"} element={
+                    <LandingPage/>
+                }>
+                </Route>
+                <Route path={"/all-quizzes"} element={
+                    <AllQuizzes quizzes={quizzes} onUpdate={updateQuiz} onDelete={deleteQuiz}/>
+                }>
+                </Route>
+                <Route path={"/all-quizzes/add"} element={
+                    <Form getAll={getAllQuizzes} onAdd={handleAddQuiz}/>
+                }>
+                </Route>
+            </Routes>
         </>
     )
 }

@@ -36,3 +36,13 @@
   justify-content: space-around;
   padding: 10px;
 }
+
+.allquizzes-header {
+  position: relative;
+}
+
+.add-button {
+  position: absolute;
+  left: 140px;
+  top: -120px;
+}
