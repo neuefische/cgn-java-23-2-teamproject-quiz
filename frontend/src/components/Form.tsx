@@ -17,10 +17,10 @@ export default function Form(props: Props) {
     const [inputValue, setInputValue] = useState({
         question: "",
 
-        answer1: {answer: "", rightAnswer: false},
-        answer2: {answer: "", rightAnswer: false},
-        answer3: {answer: "", rightAnswer: false},
-        answer4: {answer: "", rightAnswer: false}
+        answer1: {answerText: "", rightAnswer: false},
+        answer2: {answerText: "", rightAnswer: false},
+        answer3: {answerText: "", rightAnswer: false},
+        answer4: {answerText: "", rightAnswer: false}
     })
 
     const navigate = useNavigate();
@@ -31,16 +31,16 @@ export default function Form(props: Props) {
             question: inputValue.question,
             answers: [
                 {
-                    answer: inputValue.answer1.answer,
+                    answerText: inputValue.answer1.answerText,
                     rightAnswer: inputValue.answer1.rightAnswer
                 },{
-                    answer: inputValue.answer2.answer,
+                    answerText: inputValue.answer2.answerText,
                     rightAnswer: inputValue.answer2.rightAnswer
                 },{
-                    answer: inputValue.answer3.answer,
+                    answerText: inputValue.answer3.answerText,
                     rightAnswer: inputValue.answer3.rightAnswer
                 },{
-                    answer: inputValue.answer4.answer,
+                    answerText: inputValue.answer4.answerText,
                     rightAnswer: inputValue.answer4.rightAnswer
                 },
             ]
@@ -49,10 +49,10 @@ export default function Form(props: Props) {
         setInputValue({
             question: "",
 
-            answer1: {answer: "", rightAnswer: false},
-            answer2: {answer: "", rightAnswer: false},
-            answer3: {answer: "", rightAnswer: false},
-            answer4: {answer: "", rightAnswer: false}
+            answer1: {answerText: "", rightAnswer: false},
+            answer2: {answerText: "", rightAnswer: false},
+            answer3: {answerText: "", rightAnswer: false},
+            answer4: {answerText: "", rightAnswer: false}
         })
     }
 
@@ -94,8 +94,8 @@ export default function Form(props: Props) {
                 />
                 <div>
                     <TextField
-                        onChange={e => setInputValue({...inputValue, answer1: {...inputValue.answer1, answer: e.target.value}})}
-                        value={inputValue.answer1.answer}
+                        onChange={e => setInputValue({...inputValue, answer1: {...inputValue.answer1, answerText: e.target.value}})}
+                        value={inputValue.answer1.answerText}
                         id="outlined-basic"
                         label="Answer1"
                         variant="outlined"
@@ -110,8 +110,8 @@ export default function Form(props: Props) {
 
                 <div>
                     <TextField
-                        onChange={e => setInputValue({...inputValue, answer2: {...inputValue.answer2, answer: e.target.value}})}
-                        value={inputValue.answer2.answer}
+                        onChange={e => setInputValue({...inputValue, answer2: {...inputValue.answer2, answerText: e.target.value}})}
+                        value={inputValue.answer2.answerText}
                         id="outlined-basic"
                         label="Answer2"
                         variant="outlined"
@@ -125,8 +125,8 @@ export default function Form(props: Props) {
                 </div>
                 <div>
                     <TextField
-                        onChange={e => setInputValue({...inputValue, answer3: {...inputValue.answer3, answer: e.target.value}})}
-                        value={inputValue.answer3.answer}
+                        onChange={e => setInputValue({...inputValue, answer3: {...inputValue.answer3, answerText: e.target.value}})}
+                        value={inputValue.answer3.answerText}
                         id="outlined-basic"
                         label="Answer3"
                         variant="outlined"
@@ -141,8 +141,8 @@ export default function Form(props: Props) {
 
                 <div>
                     <TextField
-                        onChange={e => setInputValue({...inputValue, answer4: {...inputValue.answer4, answer: e.target.value}})}
-                        value={inputValue.answer4.answer}
+                        onChange={e => setInputValue({...inputValue, answer4: {...inputValue.answer4, answerText: e.target.value}})}
+                        value={inputValue.answer4.answerText}
                         id="outlined-basic"
                         label="Answer4"
                         variant="outlined"

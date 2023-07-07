@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Answer {
-    private String answer;
+    private String answerText;
     private boolean rightAnswer;
 }

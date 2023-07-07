@@ -1,5 +1,5 @@
 export type Answer={
-    answer: string,
+    answerText: string,
     rightAnswer: boolean
 }
 

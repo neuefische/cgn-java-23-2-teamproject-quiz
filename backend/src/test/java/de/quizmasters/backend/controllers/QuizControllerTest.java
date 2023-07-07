@@ -48,19 +48,19 @@ class QuizControllerTest {
                         "question": "Sind Giraffen größer als Hunde?",
                         "answers": [
                             {
-                                "answer": "Ja",
+                                "answerText": "Ja",
                                 "rightAnswer": true
                             },
                             {
-                                "answer": "Nein",
+                                "answerText": "Nein",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Vielleicht",
+                                "answerText": "Vielleicht",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Keine Ahnung",
+                                "answerText": "Keine Ahnung",
                                 "rightAnswer": false
                             }
                         ]
@@ -70,19 +70,19 @@ class QuizControllerTest {
                         "question": "Sind Hunde schneller als Schnecken?",
                         "answers": [
                             {
-                                "answer": "Ja",
+                                "answerText": "Ja",
                                 "rightAnswer": true
                             },
                             {
-                                "answer": "Nein",
+                                "answerText": "Nein",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Vielleicht",
+                                "answerText": "Vielleicht",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Keine Ahnung",
+                                "answerText": "Keine Ahnung",
                                 "rightAnswer": false
                             }
                         ]
@@ -107,19 +107,19 @@ class QuizControllerTest {
                         "question": "Welche Farben haben Zebras?",
                         "answers": [
                             {
-                                "answer": "Schwarz-Weiß",
+                                "answerText": "Schwarz-Weiß",
                                 "rightAnswer": true
                             },
                             {
-                                "answer": "Rot-Weiß",
+                                "answerText": "Rot-Weiß",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Bunt",
+                                "answerText": "Bunt",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Keine Ahnung",
+                                "answerText": "Keine Ahnung",
                                 "rightAnswer": false
                             }
                         ]
@@ -132,19 +132,19 @@ class QuizControllerTest {
                                                                      "question": "Welche Farben haben Zebras?",
                                                                     "answers": [
                                         {
-                                            "answer": "Schwarz-Weiß",
+                                            "answerText": "Schwarz-Weiß",
                                             "rightAnswer": true
                                         },
                                         {
-                                            "answer": "Rot-Weiß",
+                                            "answerText": "Rot-Weiß",
                                             "rightAnswer": false
                                         },
                                         {
-                                            "answer": "Bunt",
+                                            "answerText": "Bunt",
                                             "rightAnswer": false
                                         },
                                         {
-                                            "answer": "Keine Ahnung",
+                                            "answerText": "Keine Ahnung",
                                             "rightAnswer": false
                                         }
                                     ]
@@ -179,19 +179,19 @@ class QuizControllerTest {
                         "question": "Welches Tier hat Streifen?",
                         "answers": [
                             {
-                                "answer": "Zebra",
+                                "answerText": "Zebra",
                                 "rightAnswer": true
                             },
                             {
-                                "answer": "Hund",
+                                "answerText": "Hund",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Maus",
+                                "answerText": "Maus",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Keine Ahnung",
+                                "answerText": "Keine Ahnung",
                                 "rightAnswer": false
                             }
                         ]
@@ -207,19 +207,19 @@ class QuizControllerTest {
                         "question": "Welches Tier hat Streifen?",
                         "answers": [
                             {
-                                "answer": "Zebra",
+                                "answerText": "Zebra",
                                 "rightAnswer": true
                             },
                             {
-                                "answer": "Hund",
+                                "answerText": "Hund",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Maus",
+                                "answerText": "Maus",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Keine Ahnung",
+                                "answerText": "Keine Ahnung",
                                 "rightAnswer": false
                             }
                         ]
@@ -253,19 +253,19 @@ class QuizControllerTest {
                         "question": "Sind Hunde schneller als Schnecken?",
                         "answers": [
                             {
-                                "answer": "Ja",
+                                "answerText": "Ja",
                                 "rightAnswer": true
                             },
                             {
-                                "answer": "Nein",
+                                "answerText": "Nein",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Vielleicht",
+                                "answerText": "Vielleicht",
                                 "rightAnswer": false
                             },
                             {
-                                "answer": "Keine Ahnung",
+                                "answerText": "Keine Ahnung",
                                 "rightAnswer": false
                             }
                         ]
