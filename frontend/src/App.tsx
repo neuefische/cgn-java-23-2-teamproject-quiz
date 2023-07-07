@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import {Quiz, DtoQuiz} from "./model/Quiz.tsx";
 import axios from "axios";
 import Form from "./components/Form.tsx";
-import QuizCard from "./components/QuizCard.tsx";
 import {Routes, Route} from "react-router-dom";
 import LandingPage from "./components/LandingPage.tsx";
 import AllQuizzes from "./components/AllQuizzes.tsx";

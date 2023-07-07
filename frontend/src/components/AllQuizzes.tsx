@@ -1,7 +1,7 @@
 import QuizCard from "./QuizCard.tsx";
 import {Quiz} from "../model/Quiz.tsx";
 import {IconButton} from "@mui/material";
-import {AddCircle} from "@mui/icons-material";
+import {AddCircle, ArrowBack} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 
 type Props = {
@@ -13,8 +13,13 @@ type Props = {
 function AllQuizzes(props: Props) {
     return (
         <main>
-            <section className={"allquizzes-header"}>
-                <h1>All Quizzes:</h1>
+            <Link to={"/"}>
+                <IconButton className={"back-button"} color={"secondary"}>
+                    <ArrowBack/>
+                </IconButton>
+            </Link>
+            <section className={"allquizzes-header-container"}>
+                <h1 className={"allquizzes-header"}>All Quizzes:</h1>
                 <Link to={"/all-quizzes/add"}>
                     <IconButton className={"add-button"} type={"submit"} color="primary" aria-label="add quiz">
                         <AddCircle />

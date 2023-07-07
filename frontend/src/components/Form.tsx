@@ -1,8 +1,8 @@
-import {FormEvent, useEffect, useState} from "react";
+import {FormEvent, useState} from "react";
 import {DtoQuiz} from "../model/Quiz.tsx";
 import {IconButton, TextField} from "@mui/material";
-import {AddCircle} from "@mui/icons-material";
-import { useNavigate } from 'react-router-dom';
+import {AddCircle, ArrowBack} from "@mui/icons-material";
+import {Link, useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import delay from 'delay';
@@ -51,6 +51,11 @@ export default function Form(props: Props) {
 
 
     return (<>
+            <Link to={"/all-quizzes"}>
+                <IconButton className={"back-button-form"} color={"secondary"}>
+                    <ArrowBack/>
+                </IconButton>
+            </Link>
             <h1>Add a Quiz:</h1>
             <form className={"form-container"} onSubmit={handleSubmit}>
                 <TextField

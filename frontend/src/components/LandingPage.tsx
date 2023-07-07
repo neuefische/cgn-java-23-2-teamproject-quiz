@@ -9,10 +9,10 @@ function LandingPage() {
             </section>
             <section>
                 <Link to={"/all-quizzes"}>
-                    <button>All Quizzes</button>
+                    <button className={"landing-button"}>All Quizzes</button>
                 </Link>
                 <Link to={"/game"}>
-                    <button>Start Game</button>
+                    <button className={"landing-button"}>Start Game</button>
                 </Link>
             </section>
         </main>
