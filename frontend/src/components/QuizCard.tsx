@@ -75,9 +75,11 @@ function QuizCard(props: Props) {
                         />
                         <section className={"editmode-button-container"}>
                             <button className={"editmode-card-button editmode-button"}>Save Changes</button>
-                            <button className={"editmode-button"} onClick={handleDeleteQuiz}>Delete</button>
                         </section>
                     </form>
+                    <section className={"editmode-button-container"}>
+                        <button className={"editmode-button"} onClick={handleDeleteQuiz}>Delete</button>
+                    </section>
                 </>
             }
         </div>
