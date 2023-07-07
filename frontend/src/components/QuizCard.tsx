@@ -1,6 +1,7 @@
 import {Quiz} from "../model/Quiz.tsx";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {Checkbox, TextField} from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
 
 type Props = {
     quiz: Quiz,
@@ -55,10 +56,30 @@ function QuizCard(props: Props) {
         }
         props.onUpdate(newQuiz)
         handleEditMode()
+        toast.info("Updated Quiz!",  {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        })
     }
 
     function handleDeleteQuiz() {
         props.onDelete(props.quiz)
+        toast.error("Quiz is deleted!",  {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        })
     }
 
 
@@ -67,10 +88,11 @@ function QuizCard(props: Props) {
             {!editMode ?
                 <>
                     <p> {props.quiz.question}</p>
-                    <p> {props.quiz.answers[0].answer}</p>
-                    <p> {props.quiz.answers[1].answer}</p>
-                    <p> {props.quiz.answers[2].answer}</p>
-                    <p> {props.quiz.answers[3].answer}</p>
+                    {props.quiz.answers.map(answer => {
+                        return (
+                            <p>{answer.answer} {answer.rightAnswer ? "✅":"❌"}</p>
+                        )
+                    })}
                     <button onClick={handleEditMode}>Edit</button>
                 </>
                 :
@@ -101,7 +123,7 @@ function QuizCard(props: Props) {
                         />
                             <Checkbox
                                 checked={inputValue.answer1.rightAnswer}
-                                onChange={handleInputRightAnswer}
+                                onChange={()=> setInputValue({...inputValue, answer1: {...inputValue.answer1, rightAnswer: !inputValue.answer1.rightAnswer}})}
                                 inputProps={{ 'aria-label': 'controlled' }}
                             />
                         </div>
@@ -118,7 +140,7 @@ function QuizCard(props: Props) {
                         />
                             <Checkbox
                                 checked={inputValue.answer2.rightAnswer}
-                                onChange={handleInputRightAnswer}
+                                onChange={()=> setInputValue({...inputValue, answer2: {...inputValue.answer2, rightAnswer: !inputValue.answer2.rightAnswer}})}
                                 inputProps={{ 'aria-label': 'controlled' }}
                             />
                         </div>
@@ -135,7 +157,7 @@ function QuizCard(props: Props) {
                         />
                             <Checkbox
                                 checked={inputValue.answer3.rightAnswer}
-                                onChange={handleInputRightAnswer}
+                                onChange={()=> setInputValue({...inputValue, answer3: {...inputValue.answer3, rightAnswer: !inputValue.answer3.rightAnswer}})}
                                 inputProps={{ 'aria-label': 'controlled' }}
                             />
                         </div>
@@ -152,17 +174,20 @@ function QuizCard(props: Props) {
                         />
                             <Checkbox
                                 checked={inputValue.answer4.rightAnswer}
-                                onChange={handleInputRightAnswer}
+                                onChange={()=> setInputValue({...inputValue, answer4: {...inputValue.answer4, rightAnswer: !inputValue.answer4.rightAnswer}})}
                                 inputProps={{ 'aria-label': 'controlled' }}
                             />
                         </div>
                         <section className={"editmode-button-container"}>
                             <button className={"editmode-card-button editmode-button"}>Save Changes</button>
-                            <button className={"editmode-button"} onClick={handleDeleteQuiz}>Delete</button>
                         </section>
                     </form>
+                    <section className={"editmode-button-container"}>
+                        <button className={"editmode-button"} onClick={handleDeleteQuiz}>Delete</button>
+                    </section>
                 </>
             }
+            <ToastContainer/>
         </div>
     );
 }

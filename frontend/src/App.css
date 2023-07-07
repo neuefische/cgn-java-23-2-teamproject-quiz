@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+main {
+  position: relative;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -35,4 +39,34 @@
   display: flex;
   justify-content: space-around;
   padding: 10px;
+}
+
+.allquizzes-header-container {
+  position: relative;
+}
+
+.add-button {
+  position: absolute;
+  left: 140px;
+  top: -120px;
+}
+
+.back-button {
+  position: absolute;
+  left: -150px;
+  top: -20px;
+}
+
+.allquizzes-header {
+  margin: 0;
+}
+
+.back-button-form {
+  position: absolute;
+  left: -150px;
+  top: -152px;
+}
+
+.landing-button {
+  margin: 10px;
 }
