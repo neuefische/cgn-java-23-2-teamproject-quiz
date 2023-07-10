@@ -22,8 +22,7 @@ export default function App() {
             });
     }
 
-    if (!quizzes)
-        return <h1> ... loading </h1>
+
 
 
     function handleAddQuiz(newQuiz: DtoQuiz) {
@@ -53,6 +52,9 @@ export default function App() {
                 console.error(error);
             });
     }
+
+    if (!quizzes)
+        return <h1> ... loading </h1>
 
     return (
         <>
