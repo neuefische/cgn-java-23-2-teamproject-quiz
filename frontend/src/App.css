@@ -13,6 +13,20 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 300px;
+}
+
+.form_answer_container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.form_helper-container{
+  display: flex;
+  justify-content: space-between;
+  color: red;
+  padding-top: 20px;
+  padding-bottom: 5px;
 }
 
 .quizcard-container {
@@ -64,9 +78,10 @@ main {
 .back-button-form {
   position: absolute;
   left: -150px;
-  top: -152px;
+  top: 20px;
 }
 
 .landing-button {
   margin: 10px;
 }
+
