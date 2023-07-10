@@ -1,10 +1,15 @@
+export type Answer={
+    answerText: string,
+    rightAnswer: boolean
+}
+
 export type Quiz= {
     id: string,
     question: string,
-    answer: string,
+    answers: Answer[],
 }
 
 export type DtoQuiz = {
     question: string,
-    answer: string,
+    answers: Answer[],
 }

@@ -19,8 +19,18 @@ class QuizServiceTest {
     @Test
     void getsListOfQuizzes_whenGetAllQuizzesIsCalled() {
         //GIVEN
-        Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", "Ja");
-        Quiz testQuiz2 = new Quiz("456", "Sind Hunde schneller als Schnecken?", "Ja");
+        Quiz testQuiz1= new Quiz( "123","Sind Giraffen größer als Hunde?", new ArrayList<>( List.of(
+                new Answer("Ja", true),
+                new Answer("Nein", false),
+                new Answer("Vielleicht", false),
+                new Answer("Keine Ahnung", false)
+        )));
+        Quiz testQuiz2= new Quiz( "456","Sind Hunde schneller als Schnecken?", new ArrayList<>( List.of(
+                new Answer("Ja", true),
+                new Answer("Nein", false),
+                new Answer("Vielleicht", false),
+                new Answer("Keine Ahnung", false)
+        )));
         List<Quiz> expectedList = new ArrayList<>(List.of(testQuiz1, testQuiz2));
         //WHEN
         when(quizRepo.findAll()).thenReturn(expectedList);
@@ -33,7 +43,12 @@ class QuizServiceTest {
     @Test
     void getNewQuiz_whenAddQuizIsCalled() {
         //GIVEN
-        Quiz newQuiz = new Quiz("123", "Welche Farben haben Zebras?", "Schwarz-Weiß");
+        Quiz newQuiz= new Quiz( "123","Welche Farben haben Zebras?", new ArrayList<>( List.of(
+                new Answer("Schwarz-Weiß", true),
+                new Answer("Rot-Weiß", false),
+                new Answer("Bunt", false),
+                new Answer("Keine Ahnung", false)
+        )));
         //WHEN
         Quiz actualQuiz = quizService.addQuiz(newQuiz);
         //THEN
@@ -43,7 +58,13 @@ class QuizServiceTest {
     @Test
     void updateQuiz_whenUpdateQuizIsCalled() {
         //GIVEN
-        Quiz updatedQuiz = new Quiz("123", "Welches Tier hat Streifen?", "Zebra");
+        Quiz updatedQuiz= new Quiz( "123","Welches Tier hat Streifen?", new ArrayList<>( List.of(
+                new Answer("Zebra", true),
+                new Answer("Hund", false),
+                new Answer("Maus", false),
+                new Answer("Keine Ahnung", false)
+        )));
+        List<Quiz> mockedList = new ArrayList<>(List.of(updatedQuiz));
         //WHEN
         when(quizRepo.existsById("123")).thenReturn(true);
         when(quizRepo.save(updatedQuiz)).thenReturn(updatedQuiz);
@@ -55,10 +76,14 @@ class QuizServiceTest {
 
     @Test
     void expectNoSuchElementException_whenUpdateWithNonExistingId() {
-        Quiz testQuiz = new Quiz("000", "Welches Tier hat Streifen?", "Zebra");
+        Quiz testQuiz= new Quiz( "000","Welches Tier hat Streifen?", new ArrayList<>( List.of(
+                new Answer("Zebra", true),
+                new Answer("Hund", false),
+                new Answer("Maus", false),
+                new Answer("Keine Ahnung", false)
+        )));
         Assertions.assertThrows(NoSuchElementException.class, () -> quizService.updateQuiz("000", testQuiz));
     }
-
 
     @Test
     void expectListWithoutQuizToDelete_whenDeleteIsCalled() {
