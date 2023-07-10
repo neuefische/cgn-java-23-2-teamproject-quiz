@@ -64,7 +64,7 @@ main {
 .back-button-form {
   position: absolute;
   left: -150px;
-  top: -152px;
+  top: 20px;
 }
 
 .landing-button {
