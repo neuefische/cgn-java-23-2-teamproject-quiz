@@ -5,7 +5,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import delay from 'delay';
-import {Checkbox, IconButton, TextField} from "@mui/material";
+import {Checkbox, FormHelperText, IconButton, TextField} from "@mui/material";
 
 
 type Props = {
@@ -92,12 +92,18 @@ export default function Form(props: Props) {
                     variant="outlined"
                     required
                 />
-                <div>
+                <div className={"form_helper-container"}>
+                    <FormHelperText>Write answers</FormHelperText>
+                    <FormHelperText>Mark as true</FormHelperText>
+                </div>
+                <div className={"form_answer_container"}>
                     <TextField
                         onChange={e => setInputValue({...inputValue, answer1: {...inputValue.answer1, answerText: e.target.value}})}
                         value={inputValue.answer1.answerText}
                         id="outlined-basic"
                         label="Answer1"
+                        size={"small"}
+                        fullWidth
                         variant="outlined"
                         required
                     />
@@ -108,12 +114,14 @@ export default function Form(props: Props) {
                     />
                 </div>
 
-                <div>
+                <div className={"form_answer_container"}>
                     <TextField
                         onChange={e => setInputValue({...inputValue, answer2: {...inputValue.answer2, answerText: e.target.value}})}
                         value={inputValue.answer2.answerText}
                         id="outlined-basic"
                         label="Answer2"
+                        size={"small"}
+                        fullWidth
                         variant="outlined"
                         required
                     />
@@ -123,12 +131,14 @@ export default function Form(props: Props) {
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
                 </div>
-                <div>
+                <div className={"form_answer_container"}>
                     <TextField
                         onChange={e => setInputValue({...inputValue, answer3: {...inputValue.answer3, answerText: e.target.value}})}
                         value={inputValue.answer3.answerText}
                         id="outlined-basic"
                         label="Answer3"
+                        size={"small"}
+                        fullWidth
                         variant="outlined"
                         required
                     />
@@ -138,13 +148,14 @@ export default function Form(props: Props) {
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
                 </div>
-
-                <div>
+                <div className={"form_answer_container"}>
                     <TextField
                         onChange={e => setInputValue({...inputValue, answer4: {...inputValue.answer4, answerText: e.target.value}})}
                         value={inputValue.answer4.answerText}
                         id="outlined-basic"
                         label="Answer4"
+                        size={"small"}
+                        fullWidth
                         variant="outlined"
                         required
                     />
@@ -154,7 +165,7 @@ export default function Form(props: Props) {
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
                 </div>
-                <section>
+                    <section>
                     <IconButton type={"submit"} color="primary" aria-label="add quiz">
                         <AddCircle/>
                     </IconButton>
