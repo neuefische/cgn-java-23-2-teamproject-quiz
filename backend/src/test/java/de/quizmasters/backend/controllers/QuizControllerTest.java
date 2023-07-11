@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -100,6 +103,7 @@ class QuizControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void expectNewQuiz_whenAddNewQuiz() throws Exception {
 
         String expectedQuiz= """
@@ -149,7 +153,9 @@ class QuizControllerTest {
                                         }
                                     ]
                                 }
-                                            """))
+                                            """)
+                        .with(csrf()))
+
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
@@ -157,6 +163,7 @@ class QuizControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void expectUpdatedQuiz_whenUpdateQuiz() throws Exception {
 
         Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", List.of(
@@ -224,13 +231,15 @@ class QuizControllerTest {
                             }
                         ]
                     }
-                                """, testQuiz1.getId())))
+                                """, testQuiz1.getId()))
+                        .with(csrf()))
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
     }
 
     @Test
+    @WithMockUser
     void expectListWithoutQuizToDelete_whenDeleteQuiz() throws Exception {
         Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", List.of(
                 new Answer("Ja", true),
@@ -275,11 +284,11 @@ class QuizControllerTest {
                 """, testQuiz2.getId());
 
 
-        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/api/quiz/%s", testQuiz1.getId())))
+        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/api/quiz/%s", testQuiz1.getId()))
+                        .with(csrf()))
 
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedList));
     }
-
 }
