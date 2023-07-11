@@ -1,11 +1,11 @@
 import QuizCard from "./QuizCard.tsx";
-import {Quiz} from "../model/Quiz.tsx";
+import {GameQuiz, Quiz} from "../model/Quiz.tsx";
 import {IconButton} from "@mui/material";
 import {AddCircle, ArrowBack} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 
 type Props = {
-    quizzes: Quiz[]
+    quizzes: GameQuiz[]
     onUpdate: (updateQuiz: Quiz) => void,
     onDelete: (deleteQuiz: Quiz) => void
 }
