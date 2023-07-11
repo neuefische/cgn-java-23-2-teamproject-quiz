@@ -20,4 +20,5 @@ public class QuizUserDetailsService implements UserDetailsService {
                 .orElseThrow(()-> new UsernameNotFoundException("Username: " + username + " not found!"));
         return new User(quizUser.username(), quizUser.password(), Collections.emptyList());
     }
+
 }
