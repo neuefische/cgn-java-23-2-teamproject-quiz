@@ -12,13 +12,13 @@ export default function App() {
     const [gameQuizzes, setGameQuizzes] = useState<GameQuiz[]>()
 
     useEffect(getAllQuizzes, [])
+    useEffect(convertQuiz, [getAllQuizzes])
 
     function getAllQuizzes() {
         axios.get('/api/quiz')
             .then(response =>  {
                 setQuizzes(response.data);
             })
-            .then(convertQuiz)
             .catch(function (error) {
                 console.error(error);
             });
@@ -43,12 +43,8 @@ export default function App() {
         })
         setGameQuizzes(gQuizzes)
     }
-    if (!gameQuizzes)
-        return <h1> ... loading </h1>
-
 
     function handleAddQuiz(newQuiz: DtoQuiz) {
-
         axios.post("/api/quiz", newQuiz)
             .then(() => getAllQuizzes())
             .catch(function (error) {
@@ -58,8 +54,7 @@ export default function App() {
 
     function updateQuiz(updateQuiz: Quiz) {
         axios.put("/api/quiz/" + updateQuiz.id, updateQuiz)
-            .then((response) => {
-                console.log(response.data)
+            .then(() => {
                 getAllQuizzes()
             })
             .catch(function (error) {
@@ -74,6 +69,9 @@ export default function App() {
                 console.error(error);
             });
     }
+
+    if (!gameQuizzes)
+        return <h1> ... loading </h1>
 
     return (
         <>
