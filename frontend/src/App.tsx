@@ -13,6 +13,15 @@ export default function App() {
     const [quizzes, setQuizzes] = useState<Quiz[]>()
     const [user, setUser] = useState<string>()
 
+    function signedIn() {
+        axios.get("/api/user/me")
+            .then(response => {
+                setUser(response.data)
+            })
+    }
+
+    useEffect(signedIn, [])
+
     useEffect(getAllQuizzes, [])
 
     const navigate = useNavigate()
@@ -21,8 +30,8 @@ export default function App() {
         axios.post("/api/user/login", null, {auth: {username, password}})
             .then(response => {
                 setUser(response.data)
+                navigate("/")
             })
-        navigate("/")
     }
 
     function getAllQuizzes() {
@@ -71,20 +80,20 @@ export default function App() {
         <>
             <Routes>
                 <Route element={<ProtectedPaths user={user}/>}>
-                    <Route path={"/"} element={
-                        <LandingPage user={user}/>
-                    }>
-                    </Route>
-                    <Route path={"/all-quizzes"} element={
-                        <AllQuizzes quizzes={quizzes} onUpdate={updateQuiz} onDelete={deleteQuiz}/>
-                    }>
-                    </Route>
                     <Route path={"/all-quizzes/add"} element={
                         <Form getAll={getAllQuizzes} onAdd={handleAddQuiz}/>
                     }>
                     </Route>
                 </Route>
+                <Route path={"/"} element={
+                    <LandingPage user={user}/>
+                }>
+                </Route>
                 <Route path={"/login"} element={<LoginPage onLogin={handleLogin}/>}>
+                </Route>
+                <Route path={"/all-quizzes"} element={
+                    <AllQuizzes quizzes={quizzes} onUpdate={updateQuiz} onDelete={deleteQuiz}/>
+                }>
                 </Route>
             </Routes>
         </>

@@ -4,7 +4,7 @@ type Props = {
     user?: string
 }
 function ProtectedPaths(props: Props) {
-    const isAuthenticated = props.user !== undefined && props.user!== "AnonymousUser"
+    const isAuthenticated = props.user !== undefined && props.user!== "anonymousUser"
     return (
         isAuthenticated ? <Outlet/> : <Navigate to={"/login"} />
     );

@@ -7,7 +7,8 @@ function LandingPage(props: Props) {
     return (
         <main>
             <section>
-                <h1>Welcome {props.user}!</h1>
+                <h1>Welcome,</h1>
+                <p>{props.user}.</p>
                 <p>Take a look at all our quizzes or start the game:</p>
             </section>
             <section className={"buttons-container"}>
@@ -18,7 +19,7 @@ function LandingPage(props: Props) {
                     <button className={"landing-button"}>Start Game</button>
                 </Link>
                 <Link to={"/login"}>
-                    <button className={"login-button"}>Login</button>
+                    <button className={"login-button"}>{props.user !== undefined && props.user!== "anonymousUser" ? props.user : "Login" }</button>
                 </Link>
             </section>
         </main>

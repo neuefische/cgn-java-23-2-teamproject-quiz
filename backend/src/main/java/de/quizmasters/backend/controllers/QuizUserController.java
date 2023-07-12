@@ -11,16 +11,10 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api/user")
 public class QuizUserController {
-    @GetMapping("/me")
-    public String getMe1(Principal principal) {
-        if (principal != null) {
-            return principal.getName();
-        }
-        return "AnonymousUser";
-    }
 
-    @GetMapping("/me1")
-    public String getMe2() {
+
+    @GetMapping("/me")
+    public String getMe() {
         return SecurityContextHolder
                 .getContext()
                 .getAuthentication()
