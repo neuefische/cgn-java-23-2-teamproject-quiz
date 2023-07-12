@@ -6,6 +6,7 @@ import Form from "./components/Form.tsx";
 import {Routes, Route} from "react-router-dom";
 import LandingPage from "./components/LandingPage.tsx";
 import AllQuizzes from "./components/AllQuizzes.tsx";
+import LoginPage from "./components/LoginPage.tsx";
 
 export default function App() {
     const [quizzes, setQuizzes] = useState<Quiz[]>()
@@ -14,15 +15,13 @@ export default function App() {
 
     function getAllQuizzes() {
         axios.get('/api/quiz')
-            .then(response =>  {
+            .then(response => {
                 setQuizzes(response.data);
             })
             .catch(function (error) {
                 console.error(error);
             });
     }
-
-
 
 
     function handleAddQuiz(newQuiz: DtoQuiz) {
@@ -70,6 +69,8 @@ export default function App() {
                 <Route path={"/all-quizzes/add"} element={
                     <Form getAll={getAllQuizzes} onAdd={handleAddQuiz}/>
                 }>
+                </Route>
+                <Route path={"/login"} element={<LoginPage/>}>
                 </Route>
             </Routes>
         </>
