@@ -64,7 +64,6 @@ class QuizServiceTest {
                 new Answer("Maus", false),
                 new Answer("Keine Ahnung", false)
         )));
-        List<Quiz> mockedList = new ArrayList<>(List.of(updatedQuiz));
         //WHEN
         when(quizRepo.existsById("123")).thenReturn(true);
         when(quizRepo.save(updatedQuiz)).thenReturn(updatedQuiz);
@@ -105,4 +104,5 @@ class QuizServiceTest {
     void expectNoSuchElementException_whenDeleteWithNonExistingId() {
         Assertions.assertThrows(NoSuchElementException.class, () -> quizService.deleteQuiz("000"));
     }
+
 }
