@@ -1,10 +1,13 @@
 import {Link} from "react-router-dom";
 
-function LandingPage() {
+type Props = {
+    user? : string
+}
+function LandingPage(props: Props) {
     return (
         <main>
             <section>
-                <h1>Welcome!</h1>
+                <h1>Welcome {props.user}!</h1>
                 <p>Take a look at all our quizzes or start the game:</p>
             </section>
             <section className={"buttons-container"}>
