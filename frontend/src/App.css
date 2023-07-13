@@ -81,7 +81,16 @@ main {
   top: 20px;
 }
 
+.buttons-container{
+  position: relative;
+}
+
 .landing-button {
   margin: 10px;
+}
+.login-button{
+  position: absolute;
+  top: -370px;
+  right: 5px;
 }
 

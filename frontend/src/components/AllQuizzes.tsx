@@ -11,6 +11,8 @@ type Props = {
 }
 
 function AllQuizzes(props: Props) {
+    if (!props.quizzes)
+        return <h1> ... loading </h1>
     return (
         <main>
             <Link to={"/"}>
