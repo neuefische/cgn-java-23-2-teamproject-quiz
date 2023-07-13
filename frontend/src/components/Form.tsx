@@ -50,6 +50,8 @@ export default function Form(props: Props) {
     };
 
 
+
+
     return (<>
             <Link to={"/all-quizzes"}>
                 <IconButton className={"back-button-form"} color={"secondary"}>
@@ -120,6 +122,5 @@ export default function Form(props: Props) {
             <ToastContainer/>
         </>
 
-    )
-        ;
+    );
 }
