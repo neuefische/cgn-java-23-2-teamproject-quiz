@@ -1,5 +1,9 @@
 package de.quizmasters.backend.models;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +20,12 @@ public class Quiz {
 
     @Id
     private String id;
+    @NotNull
+    @NotBlank
+    @NotEmpty
+    @Size(min=5, max=256)
     private String question;
+    @Size(min=2, max=4)
     private List<Answer> answers;
 
 }

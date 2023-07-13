@@ -2,6 +2,7 @@ package de.quizmasters.backend.controllers;
 
 import de.quizmasters.backend.models.Quiz;
 import de.quizmasters.backend.models.QuizService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,12 +23,12 @@ public class QuizController {
     }
 
     @PostMapping
-    public Quiz add(@RequestBody Quiz newQuiz) {
+    public Quiz add(@Valid @RequestBody Quiz newQuiz) {
         return quizService.addQuiz(newQuiz);
     }
 
     @PutMapping("/{id}")
-    public Quiz update(@PathVariable String id, @RequestBody Quiz updatedQuiz) {
+    public Quiz update(@PathVariable String id, @Valid @RequestBody Quiz updatedQuiz) {
         return quizService.updateQuiz(id, updatedQuiz);
     }
 
