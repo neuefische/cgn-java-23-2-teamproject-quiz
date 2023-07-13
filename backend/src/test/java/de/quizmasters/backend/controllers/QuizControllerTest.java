@@ -164,6 +164,30 @@ class QuizControllerTest {
     @Test
     @DirtiesContext
     @WithMockUser
+    void expectBadRequest_whenAddInvalidQuiz() throws Exception {
+
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/quiz")
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                                                  {
+                                                                     "question": "Welche Farben haben Zebras?",
+                                                                    "answers": [
+                                        {
+                                            "answerText": "Schwarz-Weiß",
+                                            "rightAnswer": true
+                                        }
+                                    ]
+                                }
+                                            """)
+                        .with(csrf()))
+
+
+                .andExpect(MockMvcResultMatchers.status().is(400));
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser
     void expectUpdatedQuiz_whenUpdateQuiz() throws Exception {
 
         Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", List.of(
@@ -238,6 +262,55 @@ class QuizControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
     }
 
+    @Test
+    @DirtiesContext
+    @WithMockUser
+    void expectBadRequest_whenUpdateInvalidQuiz() throws Exception {
+
+        Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", List.of(
+                new Answer("Ja", true),
+                new Answer("Nein", false),
+                new Answer("Vielleicht", false),
+                new Answer("Keine Ahnung", false)
+        ));
+        Quiz testQuiz2 = new Quiz("456", "Sind Hunde schneller als Schnecken?", List.of(
+                new Answer("Ja", true),
+                new Answer("Nein", false),
+                new Answer("Vielleicht", false),
+                new Answer("Keine Ahnung", false)
+        ));
+        quizService.addQuiz(testQuiz1);
+        quizService.addQuiz(testQuiz2);
+
+        mockMvc.perform(MockMvcRequestBuilders.put(String.format("/api/quiz/%s",testQuiz1.getId()))
+                        .contentType(MediaType.APPLICATION_JSON).content(String.format("""
+                                                        {
+                        "id": "%s",
+                        "question": "Was?",
+                        "answers": [
+                            {
+                                "answerText": "Zebra",
+                                "rightAnswer": true
+                            },
+                            {
+                                "answerText": "Hund",
+                                "rightAnswer": false
+                            },
+                            {
+                                "answerText": "Maus",
+                                "rightAnswer": false
+                            },
+                            {
+                                "answerText": "Keine Ahnung",
+                                "rightAnswer": false
+                            }
+                        ]
+                    }
+                                """, testQuiz1.getId()))
+                        .with(csrf()))
+
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
     @Test
     @WithMockUser
     void expectListWithoutQuizToDelete_whenDeleteQuiz() throws Exception {
