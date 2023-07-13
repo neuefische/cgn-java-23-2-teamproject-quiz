@@ -17,4 +17,6 @@ public class Answer {
     private String answerText;
     @NotNull
     private boolean rightAnswer;
+    @Size(min=0, max=10)
+    private int x;
 }
