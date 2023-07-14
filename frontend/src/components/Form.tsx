@@ -95,6 +95,7 @@ export default function Form(props: Props) {
                                 fullWidth
                                 variant="outlined"
                                 required
+                                error={answer.answerText.length >0}
                             />
                             <Checkbox
                                 checked={answer.rightAnswer}

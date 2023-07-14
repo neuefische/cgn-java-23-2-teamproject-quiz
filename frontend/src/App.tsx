@@ -22,9 +22,8 @@ export default function App() {
     }
 
     useEffect(signedIn, [])
-
     useEffect(getAllQuizzes, [])
-    useEffect(convertQuiz, [getAllQuizzes])
+    useEffect(convertQuiz, [quizzes])
 
     const navigate = useNavigate()
 

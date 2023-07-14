@@ -92,11 +92,7 @@ class QuizControllerTest {
                     }
                 ]
                 """,quiz1.getId(), quiz2.getId());
-
-
-
         mockMvc.perform(MockMvcRequestBuilders.get("/api/quiz"))
-
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedList));
     }
@@ -155,8 +151,6 @@ class QuizControllerTest {
                                 }
                                             """)
                         .with(csrf()))
-
-
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
     }
@@ -205,8 +199,6 @@ class QuizControllerTest {
                     }
                 """, testQuiz1.getId());
 
-
-
         mockMvc.perform(MockMvcRequestBuilders.put(String.format("/api/quiz/%s",testQuiz1.getId()))
                         .contentType(MediaType.APPLICATION_JSON).content(String.format("""
                                                         {
@@ -233,7 +225,6 @@ class QuizControllerTest {
                     }
                                 """, testQuiz1.getId()))
                         .with(csrf()))
-
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedQuiz));
     }

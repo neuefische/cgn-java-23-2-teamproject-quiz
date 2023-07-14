@@ -87,22 +87,16 @@ class QuizServiceTest {
     @Test
     void expectListWithoutQuizToDelete_whenDeleteIsCalled() {
         // GIVEN
-
-
         when(quizRepo.existsById("123")).thenReturn(true);
         doNothing().when(quizRepo).deleteById("123");
-
         // WHEN
         quizService.deleteQuiz("123");
-
         // THEN
         verify(quizRepo).deleteById("123");
     }
-
 
     @Test
     void expectNoSuchElementException_whenDeleteWithNonExistingId() {
         Assertions.assertThrows(NoSuchElementException.class, () -> quizService.deleteQuiz("000"));
     }
-
 }
