@@ -1,16 +1,18 @@
 package de.quizmasters.backend.controllers;
 
+import de.quizmasters.backend.security.QuizUser;
+import de.quizmasters.backend.security.QuizUserService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
 public class QuizUserController {
-
-
+private final QuizUserService quizUserService;
+public QuizUserController(QuizUserService quizUserService){
+    this.quizUserService=quizUserService;
+}
     @GetMapping("/me")
     public String getMe() {
         return SecurityContextHolder
@@ -25,5 +27,11 @@ public class QuizUserController {
                 .getContext()
                 .getAuthentication()
                 .getName();
+    }
+
+    @PostMapping("/sign-up")
+    public String signUp(@Valid @RequestBody QuizUser quizUser){
+    return quizUserService.signUp(quizUser);
+
     }
 }

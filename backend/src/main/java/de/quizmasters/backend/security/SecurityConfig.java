@@ -36,6 +36,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/user/*").permitAll()
                                 .anyRequest().permitAll()
                 )
+                .logout(logout->logout.logoutUrl("/api/user/logout").logoutSuccessUrl("/api/user/me"))
                 .build();
     }
 
