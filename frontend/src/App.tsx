@@ -81,8 +81,7 @@ function handleSignUp(username: string, password: string) {
 
     function updateQuiz(updateQuiz: Quiz) {
         axios.put("/api/quiz/" + updateQuiz.id, updateQuiz)
-            .then((response) => {
-                console.log(response.data)
+            .then(() => {
                 getAllQuizzes()
             })
             .catch(function (error) {
