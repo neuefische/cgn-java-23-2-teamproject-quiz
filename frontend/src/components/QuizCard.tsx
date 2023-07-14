@@ -11,6 +11,7 @@ type Props = {
 
 function QuizCard(props: Props) {
     const [editMode, setEditMode] = useState(false)
+    const allValidations: boolean[] = []
     const [inputValue, setInputValue] = useState({
         question: props.quiz.question,
 
@@ -81,7 +82,16 @@ function QuizCard(props: Props) {
             theme: "colored",
         })
     }
+    function handleValidation(booleanValue: boolean, index: number) {
+        if (booleanValue) {
+            allValidations[index] = true
+            return "green"
+        } else {
+            allValidations[index] = false
+            return "red"
+        }
 
+    }
 
     return (
         <div className={"quizcard-container"}>
@@ -109,6 +119,12 @@ function QuizCard(props: Props) {
                             variant="outlined"
                             required
                         />
+                        </div>
+                        <div className={"validation-container"}>
+                            <p style={{color: `${handleValidation(inputValue.question.length > 5 && inputValue.question.length < 256, 0)}`}}>The
+                                question should have at least 5 and maximum 256 characters</p>
+                            <p style={{color: `${handleValidation(inputValue.question.trim().length !== 0, 1)}`}}>Question must
+                                contain characters (not just blank).</p>
                         </div>
                         <div>
                         <TextField
@@ -177,6 +193,23 @@ function QuizCard(props: Props) {
                                 onChange={()=> setInputValue({...inputValue, answer4: {...inputValue.answer4, rightAnswer: !inputValue.answer4.rightAnswer}})}
                                 inputProps={{ 'aria-label': 'controlled' }}
                             />
+                        </div>
+                        <div className={"validation-container"}>
+                            <p style={{
+                                color: `${handleValidation(
+                                    (inputValue.answer1.answerText.length < 256 && inputValue.answer1.answerText.length > 0) &&
+                                    (inputValue.answer2.answerText.length < 256 && inputValue.answer2.answerText.length > 0) &&
+                                    (inputValue.answer3.answerText.length < 256 && inputValue.answer3.answerText.length > 0) &&
+                                    (inputValue.answer4.answerText.length < 256 && inputValue.answer4.answerText.length > 0)
+                                    , 2)}`
+                            }}>All answers should have at least 1 and maximum 256 characters</p>
+                            <p style={{
+                                color: `${handleValidation(inputValue.answer1.answerText.trim().length !== 0 &&
+                                    inputValue.answer2.answerText.trim().length !== 0 &&
+                                    inputValue.answer3.answerText.trim().length !== 0 &&
+                                    inputValue.answer4.answerText.trim().length !== 0
+                                    , 3)}`
+                            }}>Answers must contain characters (not just blank).</p>
                         </div>
                         <section className={"editmode-button-container"}>
                             <button className={"editmode-card-button editmode-button"}>Save Changes</button>

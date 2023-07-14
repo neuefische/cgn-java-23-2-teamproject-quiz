@@ -93,4 +93,8 @@ main {
   top: -370px;
   right: 5px;
 }
+.validation-container{
+  text-align: start;
+font-size: 12px;
+}
 
