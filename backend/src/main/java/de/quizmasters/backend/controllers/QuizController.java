@@ -1,5 +1,6 @@
 package de.quizmasters.backend.controllers;
 
+import de.quizmasters.backend.models.DtoQuiz;
 import de.quizmasters.backend.models.Quiz;
 import de.quizmasters.backend.models.QuizService;
 import jakarta.validation.Valid;
@@ -23,12 +24,14 @@ public class QuizController {
     }
 
     @PostMapping
-    public Quiz add(@Valid @RequestBody Quiz newQuiz) {
+    public Quiz add(@Valid @RequestBody DtoQuiz newDtoQuiz) {
+        Quiz newQuiz = new Quiz("NoId", newDtoQuiz.getQuestion(), newDtoQuiz.getAnswers());
         return quizService.addQuiz(newQuiz);
     }
 
     @PutMapping("/{id}")
-    public Quiz update(@PathVariable String id, @Valid @RequestBody Quiz updatedQuiz) {
+    public Quiz update(@PathVariable String id, @Valid @RequestBody DtoQuiz updatedDtoQuiz) {
+        Quiz updatedQuiz = new Quiz(id, updatedDtoQuiz.getQuestion(), updatedDtoQuiz.getAnswers());
         return quizService.updateQuiz(id, updatedQuiz);
     }
 
