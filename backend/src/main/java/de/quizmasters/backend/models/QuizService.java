@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +24,7 @@ public class QuizService {
 
     public Quiz updateQuiz(String id, Quiz updatedQuiz) {
         if (!quizRepo.existsById(id)) {
-            throw new NoSuchElementException("Quiz Id " + id + " not found.");
+            throw new NoSuchQuizException("Quiz Id " + id + " not found.");
         }
         quizRepo.save(updatedQuiz);
         return updatedQuiz;

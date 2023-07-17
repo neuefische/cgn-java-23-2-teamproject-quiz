@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/quiz")
@@ -40,9 +39,9 @@ public class QuizController {
         return quizService.deleteQuiz(id);
     }
 
-    @ExceptionHandler({NoSuchElementException.class })
+    @ExceptionHandler({NoSuchQuizException.class })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorMessage handleNoSuchElementExceptions(NoSuchElementException exception) {
+    public ErrorMessage handleNoSuchQuizException(NoSuchQuizException exception) {
         return new ErrorMessage(exception.getMessage());
     }
 
