@@ -41,12 +41,6 @@ public class QuizController {
 
     @ExceptionHandler({NoSuchQuizException.class })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorMessage handleNoSuchQuizException(NoSuchQuizException exception) {
-        return new ErrorMessage(exception.getMessage());
-    }
-
-    @ExceptionHandler({NoSuchQuizException.class })
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorMessage handleNoSuchQuizExceptions(NoSuchQuizException exception) {
         return new ErrorMessage(exception.getMessage());
     }
