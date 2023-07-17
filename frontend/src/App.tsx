@@ -14,19 +14,23 @@ import SignUpPage from "./components/SignUpPage.tsx";
 export default function App() {
     const [quizzes, setQuizzes] = useState<Quiz[]>()
     const [user, setUser] = useState<string>()
+    const navigate = useNavigate()
+
+    useEffect(signedIn, [])
+    useEffect(getAllQuizzes, [])
 
     function signedIn() {
         axios.get("/api/user/me")
             .then(response => {
                 setUser(response.data)
             })
-
     }
-    function handleLogout(){
+
+    function handleLogout() {
         axios.post("/api/user/logout")
-            .then(request=>console.log(request.data))
+            .then(request => console.log(request.data))
         setUser("anonymousUser")
-        toast.info("Logged out!",  {
+        toast.info("Logged out!", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: true,
@@ -37,19 +41,14 @@ export default function App() {
             theme: "colored",
         })
     }
-function handleSignUp(username: string, password: string) {
-    axios.post("/api/user/sign-up", {username, password})
-        .then(response => {
-            setUser(response.data)
-            navigate("/")
-        })
+
+    function handleSignUp(username: string, password: string) {
+        axios.post("/api/user/sign-up", {username, password})
+            .then(response => {
+                setUser(response.data)
+                navigate("/")
+            })
     }
-
-    useEffect(signedIn, [])
-
-    useEffect(getAllQuizzes, [])
-
-    const navigate = useNavigate()
 
     function handleLogin(username: string, password: string) {
         axios.post("/api/user/login", null, {auth: {username, password}})
@@ -68,7 +67,6 @@ function handleSignUp(username: string, password: string) {
                 console.error(error);
             });
     }
-
 
     function handleAddQuiz(newQuiz: DtoQuiz) {
 
@@ -96,6 +94,7 @@ function handleSignUp(username: string, password: string) {
                 console.error(error);
             });
     }
+
 
     if (!quizzes)
         return <h1> ... loading </h1>
