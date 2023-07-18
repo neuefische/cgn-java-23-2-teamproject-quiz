@@ -1,6 +1,6 @@
 import './App.css'
 import {useEffect, useState} from "react";
-import {Quiz, DtoQuiz} from "./model/Quiz.tsx";
+import {Quiz, DtoQuiz, GameQuiz, GameAnswer} from "./model/Quiz.tsx";
 import axios from "axios";
 import Form from "./components/Form.tsx";
 import {Routes, Route, useNavigate} from "react-router-dom";
@@ -13,11 +13,8 @@ import SignUpPage from "./components/SignUpPage.tsx";
 
 export default function App() {
     const [quizzes, setQuizzes] = useState<Quiz[]>()
+    const [gameQuizzes, setGameQuizzes] = useState<GameQuiz[]>()
     const [user, setUser] = useState<string>()
-    const navigate = useNavigate()
-
-    useEffect(signedIn, [])
-    useEffect(getAllQuizzes, [])
 
     function signedIn() {
         axios.get("/api/user/me")
@@ -25,6 +22,12 @@ export default function App() {
                 setUser(response.data)
             })
     }
+
+    useEffect(signedIn, [])
+    useEffect(getAllQuizzes, [])
+    useEffect(convertQuiz, [quizzes])
+
+    const navigate = useNavigate()
 
     function handleLogout() {
         axios.post("/api/user/logout")
@@ -68,6 +71,26 @@ export default function App() {
             });
     }
 
+    function convertQuiz(){
+        const gQuizzes: GameQuiz[] = []
+
+        quizzes?.map(quiz=>{
+            const gQuiz: GameQuiz = {id: "", question: "", answers: []}
+            gQuiz.id = quiz.id
+            gQuiz.question = quiz.question
+            quiz.answers.map(answer => {
+                const gAnswer: GameAnswer = {
+                    id: gQuiz.answers.length,
+                    answerText: answer.answerText,
+                    rightAnswer: answer.rightAnswer,
+                }
+                gQuiz.answers.push(gAnswer)
+            })
+            gQuizzes.push(gQuiz)
+        })
+        setGameQuizzes(gQuizzes)
+    }
+
     function handleAddQuiz(newQuiz: DtoQuiz) {
 
         axios.post("/api/quiz", newQuiz)
@@ -95,8 +118,7 @@ export default function App() {
             });
     }
 
-
-    if (!quizzes)
+    if (!gameQuizzes)
         return <h1> ... loading </h1>
 
     return (
@@ -117,7 +139,7 @@ export default function App() {
                 <Route path={"/sign-up"} element={<SignUpPage onSignUp={handleSignUp}/>}>
                 </Route>
                 <Route path={"/all-quizzes"} element={
-                    <AllQuizzes quizzes={quizzes} onUpdate={updateQuiz} onDelete={deleteQuiz}/>
+                    <AllQuizzes quizzes={gameQuizzes} onUpdate={updateQuiz} onDelete={deleteQuiz}/>
                 }>
                 </Route>
             </Routes>

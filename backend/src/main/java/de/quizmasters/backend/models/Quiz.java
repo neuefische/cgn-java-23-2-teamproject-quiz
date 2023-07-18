@@ -15,7 +15,6 @@ import java.util.List;
 @Data
 @Document("quizzes")
 public class Quiz {
-
     @Id
     private String id;
     @NotBlank
