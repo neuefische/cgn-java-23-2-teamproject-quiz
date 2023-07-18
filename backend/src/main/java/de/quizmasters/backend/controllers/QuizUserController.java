@@ -1,6 +1,6 @@
 package de.quizmasters.backend.controllers;
 
-import de.quizmasters.backend.security.QuizUser;
+import de.quizmasters.backend.security.DtoQuizUser;
 import de.quizmasters.backend.security.QuizUserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,8 +30,8 @@ public QuizUserController(QuizUserService quizUserService){
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@Valid @RequestBody QuizUser quizUser){
-    return quizUserService.signUp(quizUser);
+    public String signUp(@Valid @RequestBody DtoQuizUser dtoQuizUser){
+    return quizUserService.signUp(dtoQuizUser);
 
     }
 }
