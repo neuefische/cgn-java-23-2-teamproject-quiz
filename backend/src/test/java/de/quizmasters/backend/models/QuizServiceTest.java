@@ -1,11 +1,11 @@
 package de.quizmasters.backend.models;
 
+import de.quizmasters.backend.exception.NoSuchQuizException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -74,14 +74,14 @@ class QuizServiceTest {
     }
 
     @Test
-    void expectNoSuchElementException_whenUpdateWithNonExistingId() {
+    void expectNoSuchQuizException_whenUpdateWithNonExistingId() {
         Quiz testQuiz= new Quiz( "000","Welches Tier hat Streifen?", new ArrayList<>( List.of(
                 new Answer("Zebra", true),
                 new Answer("Hund", false),
                 new Answer("Maus", false),
                 new Answer("Keine Ahnung", false)
         )));
-        Assertions.assertThrows(NoSuchElementException.class, () -> quizService.updateQuiz("000", testQuiz));
+        Assertions.assertThrows(NoSuchQuizException.class, () -> quizService.updateQuiz("000", testQuiz));
     }
 
     @Test
@@ -101,8 +101,8 @@ class QuizServiceTest {
 
 
     @Test
-    void expectNoSuchElementException_whenDeleteWithNonExistingId() {
-        Assertions.assertThrows(NoSuchElementException.class, () -> quizService.deleteQuiz("000"));
+    void expectNoSuchQuizException_whenDeleteWithNonExistingId() {
+        Assertions.assertThrows(NoSuchQuizException.class, () -> quizService.deleteQuiz("000"));
     }
 
 }
