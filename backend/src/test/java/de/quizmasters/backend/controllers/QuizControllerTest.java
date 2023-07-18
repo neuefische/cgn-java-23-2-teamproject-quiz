@@ -1,5 +1,6 @@
 package de.quizmasters.backend.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.quizmasters.backend.models.Answer;
 import de.quizmasters.backend.models.Quiz;
 import de.quizmasters.backend.models.QuizService;
@@ -13,9 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.util.List;
-
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 @SpringBootTest
@@ -27,11 +26,10 @@ class QuizControllerTest {
 
     @Autowired
     QuizService quizService;
-
+    ObjectMapper objektMapper;
 
     @Test
     void expectAllQuizzes_whenGetAllQuizzes() throws Exception {
-
         Quiz quiz1=quizService.addQuiz(new Quiz("123", "Sind Giraffen größer als Hunde?", List.of(
                 new Answer("Ja", true),
                 new Answer("Nein", false),
@@ -101,7 +99,6 @@ class QuizControllerTest {
     @DirtiesContext
     @WithMockUser
     void expectNewQuiz_whenAddNewQuiz() throws Exception {
-
         String expectedQuiz= """
                 {
                         "question": "Welche Farben haben Zebras?",
@@ -174,8 +171,6 @@ class QuizControllerTest {
                                 }
                                             """)
                         .with(csrf()))
-
-
                 .andExpect(MockMvcResultMatchers.status().is(400));
     }
 
@@ -183,7 +178,6 @@ class QuizControllerTest {
     @DirtiesContext
     @WithMockUser
     void expectUpdatedQuiz_whenUpdateQuiz() throws Exception {
-
         Quiz testQuiz1 = new Quiz("123", "Sind Giraffen größer als Hunde?", List.of(
                 new Answer("Ja", true),
                 new Answer("Nein", false),
@@ -297,9 +291,8 @@ class QuizControllerTest {
                             }
                         ]
                     }
-                                """, testQuiz1.getId()))
+                   """, testQuiz1.getId()))
                         .with(csrf()))
-
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
     @Test
@@ -343,15 +336,12 @@ class QuizControllerTest {
                             }
                         ]
                     }
-                                          ]
-                                            
+                ]            
                 """, testQuiz2.getId());
 
 
         mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/api/quiz/%s", testQuiz1.getId()))
                         .with(csrf()))
-
-
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedList));
     }
@@ -365,10 +355,7 @@ class QuizControllerTest {
                 }
                 """;
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/quiz/11111")
-
                         .with(csrf()))
-
-
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().json(expectedMessage));
     }
@@ -407,8 +394,6 @@ class QuizControllerTest {
                     }
                                 """)
                         .with(csrf()))
-
-
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().json(expectedMessage));
     }

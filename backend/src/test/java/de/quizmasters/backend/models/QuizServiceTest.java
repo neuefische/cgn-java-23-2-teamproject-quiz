@@ -11,9 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class QuizServiceTest {
-
     QuizRepo quizRepo = mock(QuizRepo.class);
-
     QuizService quizService = new QuizService(quizRepo);
 
     @Test

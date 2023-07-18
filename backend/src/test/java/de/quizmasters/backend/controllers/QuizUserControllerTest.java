@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class QuizUserControllerTest {
@@ -22,10 +21,7 @@ class QuizUserControllerTest {
 
     @Test
     void getAnonymousUser_whenEndpointIsCalled() throws Exception {
-
-
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/me"))
-
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
                         "anonymousUser"));
@@ -35,7 +31,6 @@ class QuizUserControllerTest {
     @WithMockUser(username = "hans")
     void getUsername_whenEndpointIsCalled() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/me"))
-
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
                         "hans"));
@@ -46,7 +41,6 @@ class QuizUserControllerTest {
     void getUsername_whenLoggingIn() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user/login")
                         .with(csrf()))
-
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
                         "hans"));
@@ -62,8 +56,6 @@ class QuizUserControllerTest {
                                 }
                                             """)
                         .with(csrf()))
-
-
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
                         "Test"));
@@ -79,9 +71,6 @@ class QuizUserControllerTest {
                                 }
                                             """)
                         .with(csrf()))
-
-
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
-
 }

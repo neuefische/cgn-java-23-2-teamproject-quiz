@@ -16,7 +16,6 @@ class QuizUserServiceTest {
         String expectedUserName="TestUser";
         //WHEN
         String actualUserName=quizUserService.signUp(newQuizUser);
-
         //THEN
         Assertions.assertEquals(expectedUserName, actualUserName);
     }
