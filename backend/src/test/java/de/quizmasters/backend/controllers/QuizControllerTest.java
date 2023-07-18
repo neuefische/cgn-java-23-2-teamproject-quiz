@@ -355,4 +355,61 @@ class QuizControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedList));
     }
+
+    @Test
+    @WithMockUser
+    void expectNoSuchQuizExceptions_whenIdToDeleteNotFound() throws Exception {
+        String expectedMessage = """
+                {
+                 "message":"Quiz not found."
+                }
+                """;
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/quiz/11111")
+
+                        .with(csrf()))
+
+
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json(expectedMessage));
+    }
+
+    @Test
+    @WithMockUser
+    void expectNoSuchQuizExceptions_whenIdToUpdateNotFound() throws Exception {
+        String expectedMessage = """
+                {
+                 "message":"Quiz Id 11111 not found."
+                }
+                """;
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/quiz/11111")
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                                        {
+                        "id": "11111",
+                        "question": "Welches Tier hat Streifen?",
+                        "answers": [
+                            {
+                                "answerText": "Zebra",
+                                "rightAnswer": true
+                            },
+                            {
+                                "answerText": "Hund",
+                                "rightAnswer": false
+                            },
+                            {
+                                "answerText": "Maus",
+                                "rightAnswer": false
+                            },
+                            {
+                                "answerText": "Keine Ahnung",
+                                "rightAnswer": false
+                            }
+                        ]
+                    }
+                                """)
+                        .with(csrf()))
+
+
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json(expectedMessage));
+    }
 }

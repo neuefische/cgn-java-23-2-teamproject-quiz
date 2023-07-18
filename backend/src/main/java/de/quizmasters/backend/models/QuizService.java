@@ -1,10 +1,10 @@
 package de.quizmasters.backend.models;
 
+import de.quizmasters.backend.exception.NoSuchQuizException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -24,7 +24,7 @@ public class QuizService {
 
     public Quiz updateQuiz(String id, Quiz updatedQuiz) {
         if (!quizRepo.existsById(id)) {
-            throw new NoSuchElementException();
+            throw new NoSuchQuizException("Quiz Id " + id + " not found.");
         }
         quizRepo.save(updatedQuiz);
         return updatedQuiz;
@@ -33,7 +33,7 @@ public class QuizService {
     public List<Quiz> deleteQuiz(String idToDelete) {
 
         if (!quizRepo.existsById(idToDelete)) {
-            throw new NoSuchElementException();
+            throw new NoSuchQuizException("Quiz not found.");
         }
         quizRepo.deleteById(idToDelete);
         return getQuizzes();
