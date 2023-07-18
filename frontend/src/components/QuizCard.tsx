@@ -26,7 +26,7 @@ function QuizCard(props: Props) {
             question: props.quiz.question,
             answers: [],
         }
-        props.quiz.answers.map(answer => {
+        props.quiz.answers.forEach(answer => {
             const answerObjekt: GameAnswer = {
                 id: changeQuiz.answers.length,
                 answerText: answer.answerText,
