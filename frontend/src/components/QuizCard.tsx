@@ -1,76 +1,91 @@
-import {Quiz} from "../model/Quiz.tsx";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {Answer, GameAnswer, GameQuiz, Quiz} from "../model/Quiz.tsx";
+import {FormEvent, useEffect, useState} from "react";
 import {Checkbox, TextField} from "@mui/material";
-import { ToastContainer, toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
+import {InputValidationAnswer, InputValidationQuestion} from "./InputValidation.tsx";
 
 type Props = {
-    quiz: Quiz,
+    quiz: GameQuiz,
     onUpdate: (quiz: Quiz) => void,
     onDelete: (quiz: Quiz) => void
 }
 
 function QuizCard(props: Props) {
     const [editMode, setEditMode] = useState(false)
-    const [inputValue, setInputValue] = useState({
-        question: props.quiz.question,
+    const [inputValue, setInputValue] = useState<GameQuiz>(getQuiz)
+    const allValidations: boolean[] = []
+    const [errorMessageAnswer, setErrorMessageAnswer] = useState<string | undefined>(undefined)
+    const [errorMessageQuestion, setErrorMessageQuestion] = useState<string | undefined>(undefined)
 
-        answer1:props.quiz.answers[0],
-        answer2:props.quiz.answers[1],
-        answer3:props.quiz.answers[2],
-        answer4:props.quiz.answers[3],
-    })
+    useEffect(handleQuestionValidation, [inputValue.question])
+    useEffect(handleAnswerValidation, [inputValue.answers])
+
+    function getQuiz() {
+        const changeQuiz: GameQuiz = {
+            id: props.quiz.id,
+            question: props.quiz.question,
+            answers: [],
+        }
+        props.quiz.answers.forEach(answer => {
+            const answerObjekt: GameAnswer = {
+                id: changeQuiz.answers.length,
+                answerText: answer.answerText,
+                rightAnswer: answer.rightAnswer,
+            }
+            changeQuiz.answers.push(answerObjekt)
+        })
+        return changeQuiz
+    }
 
     function handleEditMode() {
         setEditMode(!editMode)
     }
 
-    function handleInputQuestion(event: ChangeEvent<HTMLInputElement>) {
-        setInputValue({...inputValue, question: event.target.value})
-    }
-
-    function handleInputAnswer(event: ChangeEvent<HTMLInputElement>) {
-        const eventName=event.target.name as "answer1" | "answer2" | "answer3" | "answer4"
-        setInputValue({...inputValue, [event.target.name]:{...inputValue[eventName], answerText: event.target.value}})
-    }
-
     function handleUpdateQuiz(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const newQuiz: Quiz = {
-            id: props.quiz.id,
-            question: inputValue.question,
-            answers: [
-                {
-                    answerText: inputValue.answer1.answerText,
-                    rightAnswer: inputValue.answer1.rightAnswer
-                }, {
-                    answerText: inputValue.answer2.answerText,
-                    rightAnswer: inputValue.answer2.rightAnswer
-                }, {
-                    answerText: inputValue.answer3.answerText,
-                    rightAnswer: inputValue.answer3.rightAnswer
-                }, {
-                    answerText: inputValue.answer4.answerText,
-                    rightAnswer: inputValue.answer4.rightAnswer
+        if (allValidations.includes(false)) {
+            toast.error("Input values are not valid!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
+        } else {
+            const newQuiz: Quiz = {
+                id: props.quiz.id,
+                question: inputValue.question,
+                answers: []
+            }
+            inputValue.answers.map(answer => {
+                const answerObjekt: Answer = {
+                    answerText: answer.answerText,
+                    rightAnswer: answer.rightAnswer,
                 }
-            ]
+                newQuiz.answers.push(answerObjekt)
+            })
+
+            props.onUpdate(newQuiz)
+            handleEditMode()
+            toast.info("Updated Quiz!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
         }
-        props.onUpdate(newQuiz)
-        handleEditMode()
-        toast.info("Updated Quiz!",  {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        })
     }
 
     function handleDeleteQuiz() {
         props.onDelete(props.quiz)
-        toast.error("Quiz is deleted!",  {
+        toast.error("Quiz is deleted!", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: true,
@@ -81,7 +96,16 @@ function QuizCard(props: Props) {
             theme: "colored",
         })
     }
-
+    function handleQuestionValidation() {
+        const error: string|undefined = InputValidationQuestion(inputValue.question)
+        setErrorMessageQuestion(error)
+        allValidations[0] = error === undefined;
+    }
+    function handleAnswerValidation() {
+        const error: string|undefined = InputValidationAnswer(inputValue)
+        setErrorMessageAnswer(error)
+        allValidations[1] = error === undefined;
+    }
 
     return (
         <div className={"quizcard-container"}>
@@ -90,7 +114,7 @@ function QuizCard(props: Props) {
                     <p> {props.quiz.question}</p>
                     {props.quiz.answers.map(answer => {
                         return (
-                            <p key={answer.answerText}>{answer.answerText} {answer.rightAnswer ? "✅":"❌"}</p>
+                            <p key={answer.id}>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
                         )
                     })}
                     <button onClick={handleEditMode}>Edit</button>
@@ -100,83 +124,57 @@ function QuizCard(props: Props) {
                     <form className={"editmode-card-container"} onSubmit={handleUpdateQuiz}>
                         <h4>Edit:</h4>
                         <div>
-                        <TextField
-                            onChange={handleInputQuestion}
-                            value={inputValue.question}
-                            id="outlined-basic"
-                            color={"success"}
-                            label="Question"
-                            variant="outlined"
-                            required
-                        />
-                        </div>
-                        <div>
-                        <TextField
-                            onChange={handleInputAnswer}
-                            value={inputValue.answer1.answerText}
-                            name={"answer1"}
-                            id="outlined-basic"
-                            color={"success"}
-                            label="Answer1"
-                            variant="outlined"
-                            required
-                        />
-                            <Checkbox
-                                checked={inputValue.answer1.rightAnswer}
-                                onChange={()=> setInputValue({...inputValue, answer1: {...inputValue.answer1, rightAnswer: !inputValue.answer1.rightAnswer}})}
-                                inputProps={{ 'aria-label': 'controlled' }}
+                            <TextField
+                                onChange={e => setInputValue({...inputValue, question: e.target.value})}
+                                value={inputValue.question}
+                                id="outlined-basic"
+                                color={"success"}
+                                label="Question"
+                                variant="outlined"
+                                required
                             />
                         </div>
-                        <div>
-                        <TextField
-                            onChange={handleInputAnswer}
-                            value={inputValue.answer2.answerText}
-                            name={"answer2"}
-                            id="outlined-basic"
-                            color={"success"}
-                            label="Answer2"
-                            variant="outlined"
-                            required
-                        />
-                            <Checkbox
-                                checked={inputValue.answer2.rightAnswer}
-                                onChange={()=> setInputValue({...inputValue, answer2: {...inputValue.answer2, rightAnswer: !inputValue.answer2.rightAnswer}})}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
+                        <div className={"validation-container"}>
+                            <p>{errorMessageQuestion}</p>
                         </div>
-                        <div>
-                        <TextField
-                            onChange={handleInputAnswer}
-                            value={inputValue.answer3.answerText}
-                            name={"answer3"}
-                            id="outlined-basic"
-                            color={"success"}
-                            label="Answer3"
-                            variant="outlined"
-                            required
-                        />
-                            <Checkbox
-                                checked={inputValue.answer3.rightAnswer}
-                                onChange={()=> setInputValue({...inputValue, answer3: {...inputValue.answer3, rightAnswer: !inputValue.answer3.rightAnswer}})}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
-                        </div>
-                        <div>
-                        <TextField
-                            onChange={handleInputAnswer}
-                            value={inputValue.answer4.answerText}
-                            name={"answer4"}
-                            id="outlined-basic"
-                            color={"success"}
-                            label="Answer4"
-                            variant="outlined"
-                            required
-                        />
-                            <Checkbox
-                                checked={inputValue.answer4.rightAnswer}
-                                onChange={()=> setInputValue({...inputValue, answer4: {...inputValue.answer4, rightAnswer: !inputValue.answer4.rightAnswer}})}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
+                        {inputValue.answers.map(answer => {
+                            return <div key={answer.id}>
+                                <TextField
+                                    onChange={e => {
+                                        setInputValue({
+                                            ...inputValue,
+                                            answers: inputValue.answers.map(a => {
+                                                if (a.id === answer.id) {
+                                                    return {...a, answerText: e.target.value}
+                                                }
+                                                return a
+                                            })})}}
+                                    value={answer.answerText}
+                                    name={""+answer.id}
+                                    id="outlined-basic"
+                                    color={"success"}
+                                    label={"Answer" + answer.id+1}
+                                    variant="outlined"
+                                    required
+                                />
+                                <Checkbox
+                                    checked={answer.rightAnswer}
+                                    onChange={() => setInputValue({
+                                        ...inputValue,
+                                        answers: inputValue.answers.map(a => {
+                                            if (a.id === answer.id) {
+                                                return {...a, rightAnswer: !answer.rightAnswer}
+                                            }
+                                            return a
+                                        })
+                                    })}
+                                    inputProps={{'aria-label': 'controlled'}}
+                                />
+                            </div>
+                        })}
+
+                        <div className={"validation-container"}>
+                            <p>{errorMessageAnswer}</p>
                         </div>
                         <section className={"editmode-button-container"}>
                             <button className={"editmode-card-button editmode-button"}>Save Changes</button>

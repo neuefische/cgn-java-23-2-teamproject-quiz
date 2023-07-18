@@ -11,9 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class QuizServiceTest {
-
     QuizRepo quizRepo = mock(QuizRepo.class);
-
     QuizService quizService = new QuizService(quizRepo);
 
     @Test
@@ -87,22 +85,16 @@ class QuizServiceTest {
     @Test
     void expectListWithoutQuizToDelete_whenDeleteIsCalled() {
         // GIVEN
-
-
         when(quizRepo.existsById("123")).thenReturn(true);
         doNothing().when(quizRepo).deleteById("123");
-
         // WHEN
         quizService.deleteQuiz("123");
-
         // THEN
         verify(quizRepo).deleteById("123");
     }
-
 
     @Test
     void expectNoSuchQuizException_whenDeleteWithNonExistingId() {
         Assertions.assertThrows(NoSuchQuizException.class, () -> quizService.deleteQuiz("000"));
     }
-
 }
