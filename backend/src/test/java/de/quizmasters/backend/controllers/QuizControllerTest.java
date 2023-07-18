@@ -332,7 +332,7 @@ class QuizControllerTest {
                             }
                         ]
                     }
-                ]           
+                ]
                 """, testQuiz2.getId());
 
 
