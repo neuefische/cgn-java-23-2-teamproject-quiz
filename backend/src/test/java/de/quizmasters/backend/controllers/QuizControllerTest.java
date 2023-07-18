@@ -1,6 +1,5 @@
 package de.quizmasters.backend.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.quizmasters.backend.models.Answer;
 import de.quizmasters.backend.models.Quiz;
 import de.quizmasters.backend.models.QuizService;
@@ -23,11 +22,8 @@ class QuizControllerTest {
 
     @Autowired
     MockMvc mockMvc;
-
     @Autowired
     QuizService quizService;
-    ObjectMapper objektMapper;
-
     @Test
     void expectAllQuizzes_whenGetAllQuizzes() throws Exception {
         Quiz quiz1=quizService.addQuiz(new Quiz("123", "Sind Giraffen größer als Hunde?", List.of(
@@ -336,7 +332,7 @@ class QuizControllerTest {
                             }
                         ]
                     }
-                ]            
+                ]           
                 """, testQuiz2.getId());
 
 
