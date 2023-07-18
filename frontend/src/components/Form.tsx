@@ -1,4 +1,4 @@
-import {FormEvent, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {GameQuiz, DtoQuiz} from "../model/Quiz.tsx";
 import {AddCircle, ArrowBack} from "@mui/icons-material";
 import {Link, useNavigate} from 'react-router-dom';
@@ -6,7 +6,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import delay from 'delay';
 import {Checkbox, FormHelperText, IconButton, TextField} from "@mui/material";
-
+import {InputValidationAnswer, InputValidationQuestion} from "./InputValidation.tsx";
 
 type Props = {
     getAll: () => void;
@@ -15,6 +15,9 @@ type Props = {
 
 export default function Form(props: Props) {
     const allValidations: boolean[] = []
+    const [errorMessageAnswer, setErrorMessageAnswer] = useState<string | undefined>(undefined)
+    const [errorMessageQuestion, setErrorMessageQuestion] = useState<string | undefined>(undefined)
+
     const [inputValue, setInputValue] = useState<GameQuiz>(
         {
             id: "neu",
@@ -27,6 +30,9 @@ export default function Form(props: Props) {
         })
 
     const navigate = useNavigate();
+
+    useEffect(handleQuestionValidation, [inputValue.question])
+    useEffect(handleAnswerValidation, [inputValue.answers])
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -47,7 +53,6 @@ export default function Form(props: Props) {
         }
     }
 
-
     const delayedExecution = async () => {
         toast.success("Success", {
             position: "top-right",
@@ -63,17 +68,17 @@ export default function Form(props: Props) {
         navigate("/all-quizzes")
     };
 
-    function handleValidation(booleanValue: boolean, index: number) {
-        if (booleanValue) {
-            allValidations[index] = true
-            return "green"
-        } else {
-            allValidations[index] = false
-            return "red"
-        }
-
+    function handleQuestionValidation() {
+        const error = InputValidationQuestion(inputValue.question)
+        setErrorMessageQuestion(error)
+        allValidations[0] = error === undefined;
     }
 
+    function handleAnswerValidation() {
+        const error = InputValidationAnswer(inputValue)
+        setErrorMessageAnswer(error)
+        allValidations[1] = error === undefined;
+    }
 
     return (<>
             <Link to={"/all-quizzes"}>
@@ -93,18 +98,15 @@ export default function Form(props: Props) {
                     required
                 />
                 <div className={"validation-container"}>
-                    <p style={{color: `${handleValidation(inputValue.question.length > 5 && inputValue.question.length < 256, 0)}`}}>The
-                        question should have at least 5 and maximum 256 characters</p>
-                    <p style={{color: `${handleValidation(inputValue.question.trim().length !== 0, 1)}`}}>Question must
-                        contain characters (not just blank).</p>
+                    <p>{errorMessageQuestion}</p>
                 </div>
                 <div className={"form_helper-container"}>
                     <FormHelperText>Write answers</FormHelperText>
                     <FormHelperText>Mark as true</FormHelperText>
                 </div>
-                <div className={"form_answer_container"}>
+                <div>
                     {inputValue.answers.map(answer => {
-                        return <>
+                        return <div key={answer.id + "a"} className={"form_answer_container"}>
                             <TextField
                                 onChange={e => {
                                     setInputValue({
@@ -114,10 +116,12 @@ export default function Form(props: Props) {
                                                 return {...a, answerText: e.target.value}
                                             }
                                             return a
-                                        })})}}
+                                        })
+                                    })
+                                }}
                                 value={answer.answerText}
                                 id="outlined-basic"
-                                label= {"Answer"+answer.id}
+                                label={"Answer" + answer.id}
                                 size={"small"}
                                 fullWidth
                                 variant="outlined"
@@ -136,26 +140,11 @@ export default function Form(props: Props) {
                                 })}
                                 inputProps={{'aria-label': 'controlled'}}
                             />
-                        </>
+                        </div>
                     })}
-
                 </div>
                 <div className={"validation-container"}>
-                    <p style={{
-                        color: `${handleValidation(
-                            (inputValue.answer1.answerText.length < 256 && inputValue.answer1.answerText.length > 0) &&
-                            (inputValue.answer2.answerText.length < 256 && inputValue.answer2.answerText.length > 0) &&
-                            (inputValue.answer3.answerText.length < 256 && inputValue.answer3.answerText.length > 0) &&
-                            (inputValue.answer4.answerText.length < 256 && inputValue.answer4.answerText.length > 0)
-                            , 2)}`
-                    }}>All answers should have at least 1 and maximum 256 characters</p>
-                    <p style={{
-                        color: `${handleValidation(inputValue.answer1.answerText.trim().length !== 0 &&
-                            inputValue.answer2.answerText.trim().length !== 0 &&
-                            inputValue.answer3.answerText.trim().length !== 0 &&
-                            inputValue.answer4.answerText.trim().length !== 0
-                            , 3)}`
-                    }}>Answers must contain characters (not just blank).</p>
+                    <p>{errorMessageAnswer}</p>
                 </div>
                 <section>
                     <IconButton type={"submit"} color="primary" aria-label="add quiz">

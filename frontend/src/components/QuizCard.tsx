@@ -1,7 +1,8 @@
 import {Answer, GameAnswer, GameQuiz, Quiz} from "../model/Quiz.tsx";
-import {FormEvent, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {Checkbox, TextField} from "@mui/material";
 import {ToastContainer, toast} from 'react-toastify';
+import {InputValidationAnswer, InputValidationQuestion} from "./InputValidation.tsx";
 
 type Props = {
     quiz: GameQuiz,
@@ -13,6 +14,11 @@ function QuizCard(props: Props) {
     const [editMode, setEditMode] = useState(false)
     const [inputValue, setInputValue] = useState<GameQuiz>(getQuiz)
     const allValidations: boolean[] = []
+    const [errorMessageAnswer, setErrorMessageAnswer] = useState<string | undefined>(undefined)
+    const [errorMessageQuestion, setErrorMessageQuestion] = useState<string | undefined>(undefined)
+
+    useEffect(handleQuestionValidation, [inputValue.question])
+    useEffect(handleAnswerValidation, [inputValue.answers])
 
     function getQuiz() {
         const changeQuiz: GameQuiz = {
@@ -33,15 +39,6 @@ function QuizCard(props: Props) {
 
     function handleEditMode() {
         setEditMode(!editMode)
-    }
-
-    function handleInputQuestion(event: ChangeEvent<HTMLInputElement>) {
-        setInputValue({...inputValue, question: event.target.value})
-    }
-
-    function handleInputAnswer(event: ChangeEvent<HTMLInputElement>) {
-        const eventName=event.target.name as "answer1" | "answer2" | "answer3" | "answer4"
-        setInputValue({...inputValue, [event.target.name]:{...inputValue[eventName], answerText: event.target.value}})
     }
 
     function handleUpdateQuiz(event: FormEvent<HTMLFormElement>) {
@@ -99,16 +96,15 @@ function QuizCard(props: Props) {
             theme: "colored",
         })
     }
-
-    function handleValidation(booleanValue: boolean, index: number) {
-        if (booleanValue) {
-            allValidations[index] = true
-            return "green"
-        } else {
-            allValidations[index] = false
-            return "red"
-        }
-
+    function handleQuestionValidation() {
+        const error: string|undefined = InputValidationQuestion(inputValue.question)
+        setErrorMessageQuestion(error)
+        allValidations[0] = error === undefined;
+    }
+    function handleAnswerValidation() {
+        const error: string|undefined = InputValidationAnswer(inputValue)
+        setErrorMessageAnswer(error)
+        allValidations[1] = error === undefined;
     }
 
     return (
@@ -118,7 +114,7 @@ function QuizCard(props: Props) {
                     <p> {props.quiz.question}</p>
                     {props.quiz.answers.map(answer => {
                         return (
-                            <p key={answer.answerText}>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
+                            <p key={answer.id}>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
                         )
                     })}
                     <button onClick={handleEditMode}>Edit</button>
@@ -138,8 +134,11 @@ function QuizCard(props: Props) {
                                 required
                             />
                         </div>
+                        <div className={"validation-container"}>
+                            <p>{errorMessageQuestion}</p>
+                        </div>
                         {inputValue.answers.map(answer => {
-                            return <div>
+                            return <div key={answer.id}>
                                 <TextField
                                     onChange={e => {
                                         setInputValue({
@@ -154,7 +153,7 @@ function QuizCard(props: Props) {
                                     name={""+answer.id}
                                     id="outlined-basic"
                                     color={"success"}
-                                    label={"Answer" + answer.id}
+                                    label={"Answer" + answer.id+1}
                                     variant="outlined"
                                     required
                                 />
@@ -175,21 +174,7 @@ function QuizCard(props: Props) {
                         })}
 
                         <div className={"validation-container"}>
-                            <p style={{
-                                color: `${handleValidation(
-                                    (inputValue.answer1.answerText.length < 256 && inputValue.answer1.answerText.length > 0) &&
-                                    (inputValue.answer2.answerText.length < 256 && inputValue.answer2.answerText.length > 0) &&
-                                    (inputValue.answer3.answerText.length < 256 && inputValue.answer3.answerText.length > 0) &&
-                                    (inputValue.answer4.answerText.length < 256 && inputValue.answer4.answerText.length > 0)
-                                    , 2)}`
-                            }}>All answers should have at least 1 and maximum 256 characters</p>
-                            <p style={{
-                                color: `${handleValidation(inputValue.answer1.answerText.trim().length !== 0 &&
-                                    inputValue.answer2.answerText.trim().length !== 0 &&
-                                    inputValue.answer3.answerText.trim().length !== 0 &&
-                                    inputValue.answer4.answerText.trim().length !== 0
-                                    , 3)}`
-                            }}>Answers must contain characters (not just blank).</p>
+                            <p>{errorMessageAnswer}</p>
                         </div>
                         <section className={"editmode-button-container"}>
                             <button className={"editmode-card-button editmode-button"}>Save Changes</button>
