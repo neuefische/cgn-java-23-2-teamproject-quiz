@@ -116,8 +116,8 @@ function QuizCard(props: Props) {
                     <div className={"answers-display-container"}>
                         {props.quiz.answers.map(answer => {
                             return (
-                                <div className={"answers-display"}>
-                                    <p key={answer.id}>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
+                                <div className={"answers-display"} key={answer.id}>
+                                    <p>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
                                 </div>
                             )
                         })}
