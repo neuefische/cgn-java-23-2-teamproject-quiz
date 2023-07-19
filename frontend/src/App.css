@@ -9,6 +9,14 @@ main {
   position: relative;
 }
 
+button {
+  background-color: #694a40;
+  border: none;
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -45,9 +53,6 @@ main {
   gap: 15px;
 }
 
-.editmode-card-button {
-  width: 150px;
-}
 
 .editmode-button-container {
   display: flex;

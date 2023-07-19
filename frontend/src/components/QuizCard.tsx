@@ -3,6 +3,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {Checkbox, TextField} from "@mui/material";
 import {ToastContainer, toast} from 'react-toastify';
 import {InputValidationAnswer, InputValidationQuestion} from "./InputValidation.tsx";
+import {brown} from "@mui/material/colors";
 
 type Props = {
     quiz: GameQuiz,
@@ -107,7 +108,7 @@ function QuizCard(props: Props) {
         allValidations[1] = error === undefined;
     }
 
-    return (
+    return (<>
         <div className={"quizcard-container"}>
             {!editMode ?
                 <>
@@ -169,6 +170,12 @@ function QuizCard(props: Props) {
                                         })
                                     })}
                                     inputProps={{'aria-label': 'controlled'}}
+                                    sx={{
+                                        color: brown[600],
+                                        '&.Mui-checked': {
+                                            color: brown[600],
+                                        },
+                                    }}
                                 />
                             </div>
                         })}
@@ -177,7 +184,7 @@ function QuizCard(props: Props) {
                             <p>{errorMessageAnswer}</p>
                         </div>
                         <section className={"editmode-button-container"}>
-                            <button className={"editmode-card-button editmode-button"}>Save Changes</button>
+                            <button className={"editmode-button"}>Save Changes</button>
                         </section>
                     </form>
                     <section className={"editmode-button-container"}>
@@ -187,6 +194,7 @@ function QuizCard(props: Props) {
             }
             <ToastContainer/>
         </div>
+        </>
     );
 }
 
