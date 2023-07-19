@@ -15,6 +15,7 @@ function LoginPage(props: Props) {
                     <ArrowBack/>
                 </IconButton>
             </Link>
+            <h3>Sign-in:</h3>
             <section className={"login-form-container"}>
                 <UserNamePasswordInput onLoginSubmit={props.onLogin} loginSubmit = {true}/>
             </section>

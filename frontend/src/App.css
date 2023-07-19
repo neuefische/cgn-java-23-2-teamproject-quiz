@@ -93,10 +93,16 @@ button {
   top: 20px;
 }
 
-.back-button-login {
+.back-button-sign-up {
   position: absolute;
   left: -150px;
-  top: -200px;
+  top: -180px;
+}
+
+.back-button-login{
+  position: absolute;
+  left: -150px;
+  top: -170px;
 }
 
 .buttons-container{

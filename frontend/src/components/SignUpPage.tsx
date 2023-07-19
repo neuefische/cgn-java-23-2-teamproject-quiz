@@ -8,11 +8,12 @@ type Props={
 function SignUpPage(props:Props) {
     return (
         <>
-            <Link to={"/"}>
-                <IconButton className={"back-button-login"} color={"secondary"}>
+            <Link to={"/login"}>
+                <IconButton className={"back-button-sign-up"} color={"secondary"}>
                     <ArrowBack/>
                 </IconButton>
             </Link>
+            <h3>Sign-up:</h3>
             <UserNamePasswordInput onLoginSubmit={props.onSignUp} loginSubmit={false}/>
         </>
     );
