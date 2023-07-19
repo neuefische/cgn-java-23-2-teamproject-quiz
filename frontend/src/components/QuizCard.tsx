@@ -112,7 +112,7 @@ function QuizCard(props: Props) {
         <div className={"quizcard-container"}>
             {!editMode ?
                 <>
-                    <p> {props.quiz.question}</p>
+                    <h3> {props.quiz.question}</h3>
                     {props.quiz.answers.map(answer => {
                         return (
                             <p key={answer.id}>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
