@@ -113,11 +113,16 @@ function QuizCard(props: Props) {
             {!editMode ?
                 <>
                     <h3> {props.quiz.question}</h3>
-                    {props.quiz.answers.map(answer => {
-                        return (
-                            <p key={answer.id}>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
-                        )
-                    })}
+                    <div className={"answers-display-container"}>
+                        {props.quiz.answers.map(answer => {
+                            return (
+                                <div className={"answers-display"}>
+                                    <p key={answer.id}>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
+                                </div>
+                            )
+                        })}
+                    </div>
+
                     <button onClick={handleEditMode}>Edit</button>
                 </>
                 :
@@ -142,7 +147,7 @@ function QuizCard(props: Props) {
                             <p>{errorMessageQuestion}</p>
                         </div>
                         {inputValue.answers.map(answer => {
-                            return <div key={answer.id}>
+                            return <div className={"editmode-answer-container"} key={answer.id}>
                                 <TextField
                                     onChange={e => {
                                         setInputValue({
@@ -160,6 +165,7 @@ function QuizCard(props: Props) {
                                     label={"Answer" + (answer.id + 1)}
                                     variant="outlined"
                                     size={"small"}
+                                    fullWidth
                                 />
                                 <Checkbox
                                     checked={answer.rightAnswer}
@@ -177,7 +183,7 @@ function QuizCard(props: Props) {
                                         color: brown[600],
                                         '&.Mui-checked': {
                                             color: brown[600],
-                                        },
+                                        }
                                     }}
                                 />
                             </div>
