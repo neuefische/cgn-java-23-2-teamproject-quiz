@@ -147,9 +147,7 @@ export default function Form(props: Props) {
                     <p>{errorMessageAnswer}</p>
                 </div>
                 <section>
-                    <IconButton type={"submit"} color="primary" aria-label="add quiz">
-                        <AddCircle/>
-                    </IconButton>
+                    <button>Add Quiz to Collection</button>
                 </section>
             </form>
             <ToastContainer/>
