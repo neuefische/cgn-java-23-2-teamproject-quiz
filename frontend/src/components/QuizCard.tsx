@@ -132,7 +132,10 @@ function QuizCard(props: Props) {
                                 color={"success"}
                                 label="Question"
                                 variant="outlined"
+                                multiline
+                                maxRows={4}
                                 required
+                                fullWidth
                             />
                         </div>
                         <div className={"validation-container"}>
@@ -154,9 +157,9 @@ function QuizCard(props: Props) {
                                     name={""+answer.id}
                                     id="outlined-basic"
                                     color={"success"}
-                                    label={"Answer" + answer.id+1}
+                                    label={"Answer" + (answer.id + 1)}
                                     variant="outlined"
-                                    required
+                                    size={"small"}
                                 />
                                 <Checkbox
                                     checked={answer.rightAnswer}
