@@ -11,11 +11,14 @@ function LandingPage(props: Props) {
     useEffect(props.signedIn, [])
 
     return (
-        <main>
+        <main className={"main-landing-page"}>
             <section>
 
-                <h1>Welcome,</h1>
-                <p>{props.user+"."}</p>
+                <h1>Welcome{props.user !== undefined && props.user!== "anonymousUser"
+                    ?
+                ", " + props.user + "."
+                    : null
+                }</h1>
                 <p>Take a look at all our quizzes or start the game:</p>
             </section>
             <section className={"buttons-container"}>
@@ -26,7 +29,7 @@ function LandingPage(props: Props) {
                     <button className={"landing-button"}>Start Game</button>
                 </Link>
                 {props.user !== undefined && props.user!== "anonymousUser" ? (
-                    <button onClick={props.onLogout}  className={"login-button"}>Logout, {props.user}</button>
+                    <button onClick={props.onLogout}  className={"logout-button"}>Logout</button>
 
             ) : (<Link to={"/login"}>
                     <button className={"login-button"}>Login</button>

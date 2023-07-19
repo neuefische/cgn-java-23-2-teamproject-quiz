@@ -93,6 +93,12 @@ button {
   top: 20px;
 }
 
+.back-button-login {
+  position: absolute;
+  left: -150px;
+  top: -200px;
+}
+
 .buttons-container{
   position: relative;
 }
@@ -100,10 +106,18 @@ button {
 .landing-button {
   margin: 10px;
 }
-.login-button{
+.logout-button{
   position: absolute;
   top: -370px;
   right: 5px;
+  width: 70px;
+}
+
+.login-button {
+  position: absolute;
+  top: -340px;
+  right: 5px;
+  width: 70px;
 }
 .validation-container{
   text-align: start;
@@ -118,5 +132,15 @@ font-size: 12px;
 
 .answers-display {
 
+}
+
+.main-landing-page {
+  margin-right: 20px;
+  padding: 0;
+  width: 350px;
+}
+
+.login-form-container {
+  width: 300px;
 }
 
