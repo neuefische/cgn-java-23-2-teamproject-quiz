@@ -75,12 +75,14 @@ button {
   position: absolute;
   left: 140px;
   top: -90px;
+  width: 50px;
 }
 
 .back-button {
   position: absolute;
   left: -150px;
   top: 10px;
+  width: 50px;
 }
 
 .allquizzes-header {
@@ -91,18 +93,21 @@ button {
   position: absolute;
   left: -150px;
   top: 20px;
+  width: 50px;
 }
 
 .back-button-sign-up {
   position: absolute;
   left: -150px;
   top: -180px;
+  width: 50px;
 }
 
 .back-button-login{
   position: absolute;
   left: -150px;
   top: -170px;
+  width: 50px;
 }
 
 .buttons-container{
@@ -145,4 +150,5 @@ font-size: 12px;
 .login-form-container {
   width: 300px;
 }
+
 
