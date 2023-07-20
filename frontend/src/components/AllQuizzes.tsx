@@ -16,7 +16,7 @@ function AllQuizzes(props: Props) {
     return (
         <main>
             <Link to={"/"}>
-                <IconButton className={"back-button"} color={"secondary"}>
+                <IconButton size={"small"} className={"back-button"} color={"secondary"}>
                     <ArrowBack/>
                 </IconButton>
             </Link>

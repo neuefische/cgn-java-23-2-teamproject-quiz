@@ -1,6 +1,7 @@
-import {FormHelperText} from "@mui/material";
+import {FormHelperText, IconButton} from "@mui/material";
 import UserNamePasswordInput from "./UserNamePasswordInput.tsx";
 import {Link} from "react-router-dom";
+import {ArrowBack} from "@mui/icons-material";
 
 type Props = {
     onLogin: (username: string, password: string) => void
@@ -9,8 +10,16 @@ type Props = {
 
 function LoginPage(props: Props) {
     return (<>
-            <UserNamePasswordInput onLoginSubmit={props.onLogin} loginSubmit = {true}/>
-            <FormHelperText>You don't have an account? <Link to={"/sign-up"}>Sign-Up here!</Link></FormHelperText>
+            <Link to={"/"}>
+                <IconButton className={"back-button-login"} color={"secondary"}>
+                    <ArrowBack/>
+                </IconButton>
+            </Link>
+            <h3>Sign-in:</h3>
+            <section className={"login-form-container"}>
+                <UserNamePasswordInput onLoginSubmit={props.onLogin} loginSubmit = {true}/>
+            </section>
+            <FormHelperText>You don't have an account? Just use our <Link to={"/sign-up"}>Sign-Up!</Link></FormHelperText>
         </>
     );
 }

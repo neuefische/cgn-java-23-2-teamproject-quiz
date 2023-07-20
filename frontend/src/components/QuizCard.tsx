@@ -3,6 +3,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {Checkbox, TextField} from "@mui/material";
 import {ToastContainer, toast} from 'react-toastify';
 import {InputValidationAnswer, InputValidationQuestion} from "./InputValidation.tsx";
+import {brown} from "@mui/material/colors";
 
 type Props = {
     quiz: GameQuiz,
@@ -107,16 +108,21 @@ function QuizCard(props: Props) {
         allValidations[1] = error === undefined;
     }
 
-    return (
+    return (<>
         <div className={"quizcard-container"}>
             {!editMode ?
                 <>
-                    <p> {props.quiz.question}</p>
-                    {props.quiz.answers.map(answer => {
-                        return (
-                            <p key={answer.id}>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
-                        )
-                    })}
+                    <h3> {props.quiz.question}</h3>
+                    <div className={"answers-display-container"}>
+                        {props.quiz.answers.map(answer => {
+                            return (
+                                <div className={"answers-display"} key={answer.id}>
+                                    <p>{answer.answerText} {answer.rightAnswer ? "✅" : "❌"}</p>
+                                </div>
+                            )
+                        })}
+                    </div>
+
                     <button onClick={handleEditMode}>Edit</button>
                 </>
                 :
@@ -131,14 +137,17 @@ function QuizCard(props: Props) {
                                 color={"success"}
                                 label="Question"
                                 variant="outlined"
+                                multiline
+                                maxRows={4}
                                 required
+                                fullWidth
                             />
                         </div>
                         <div className={"validation-container"}>
                             <p>{errorMessageQuestion}</p>
                         </div>
                         {inputValue.answers.map(answer => {
-                            return <div key={answer.id}>
+                            return <div className={"editmode-answer-container"} key={answer.id}>
                                 <TextField
                                     onChange={e => {
                                         setInputValue({
@@ -153,9 +162,10 @@ function QuizCard(props: Props) {
                                     name={""+answer.id}
                                     id="outlined-basic"
                                     color={"success"}
-                                    label={"Answer" + answer.id+1}
+                                    label={"Answer" + (answer.id + 1)}
                                     variant="outlined"
-                                    required
+                                    size={"small"}
+                                    fullWidth
                                 />
                                 <Checkbox
                                     checked={answer.rightAnswer}
@@ -169,6 +179,12 @@ function QuizCard(props: Props) {
                                         })
                                     })}
                                     inputProps={{'aria-label': 'controlled'}}
+                                    sx={{
+                                        color: brown[600],
+                                        '&.Mui-checked': {
+                                            color: brown[600],
+                                        }
+                                    }}
                                 />
                             </div>
                         })}
@@ -177,7 +193,7 @@ function QuizCard(props: Props) {
                             <p>{errorMessageAnswer}</p>
                         </div>
                         <section className={"editmode-button-container"}>
-                            <button className={"editmode-card-button editmode-button"}>Save Changes</button>
+                            <button className={"editmode-button"}>Save Changes</button>
                         </section>
                     </form>
                     <section className={"editmode-button-container"}>
@@ -187,6 +203,7 @@ function QuizCard(props: Props) {
             }
             <ToastContainer/>
         </div>
+        </>
     );
 }
 

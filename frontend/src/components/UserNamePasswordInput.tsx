@@ -22,12 +22,13 @@ export default function UserNamePasswordInput(props:Props){
 
     return (
         <>
-            <form onSubmit={onSubmit}>
-
+            <form className={"form-container"} onSubmit={onSubmit}>
                 <TextField value={username} onChange={event => setUsername(event.target.value)} fullWidth size={"small"}
-                           id="outlined-basic" label="Username" variant="outlined"/>
-                <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                           id="outlined-basic"
+                           label="Username"
+                           variant="outlined"/>
+                <FormControl variant="outlined">
+                    <InputLabel size={"small"} htmlFor="outlined-adornment-password">Password</InputLabel>
                     <OutlinedInput onChange={event => setPassword(event.target.value)} value={password}
                                    fullWidth
                                    size={"small"}

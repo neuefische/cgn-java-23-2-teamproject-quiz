@@ -1,6 +1,6 @@
 import {FormEvent, useEffect, useState} from "react";
 import {GameQuiz, DtoQuiz} from "../model/Quiz.tsx";
-import {AddCircle, ArrowBack} from "@mui/icons-material";
+import { ArrowBack} from "@mui/icons-material";
 import {Link, useNavigate} from 'react-router-dom';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -147,9 +147,7 @@ export default function Form(props: Props) {
                     <p>{errorMessageAnswer}</p>
                 </div>
                 <section>
-                    <IconButton type={"submit"} color="primary" aria-label="add quiz">
-                        <AddCircle/>
-                    </IconButton>
+                    <button>Add Quiz to Collection</button>
                 </section>
             </form>
             <ToastContainer/>

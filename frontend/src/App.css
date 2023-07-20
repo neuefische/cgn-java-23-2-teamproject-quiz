@@ -1,12 +1,20 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
 main {
   position: relative;
+  width: 350px;
+}
+
+button {
+  background-color: #694a40;
+  border: none;
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
 }
 
 .form-container {
@@ -30,13 +38,15 @@ main {
 }
 
 .quizcard-container {
+  text-align: left;
+  width: 90%;
+  margin-bottom: 20px;
   border: 1px solid black;
   border-radius: 15px;
   background-color: #cebbaf;
   padding: 15px;
-  margin: 10px;
-  -webkit-box-shadow: 6px 9px 15px 2px rgba(0,0,0,0.73);
-  box-shadow: 6px 9px 15px 2px rgba(0,0,0,0.73);
+  -webkit-box-shadow: 6px 9px 15px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 6px 9px 15px 2px rgba(0, 0, 0, 0.32);
 }
 
 .editmode-card-container {
@@ -45,9 +55,11 @@ main {
   gap: 15px;
 }
 
-.editmode-card-button {
-  width: 150px;
+.editmode-answer-container {
+  display: flex;
+  gap: 5px;
 }
+
 
 .editmode-button-container {
   display: flex;
@@ -62,13 +74,15 @@ main {
 .add-button {
   position: absolute;
   left: 140px;
-  top: -120px;
+  top: -90px;
+  width: 50px;
 }
 
 .back-button {
   position: absolute;
   left: -150px;
-  top: -20px;
+  top: 10px;
+  width: 50px;
 }
 
 .allquizzes-header {
@@ -79,6 +93,21 @@ main {
   position: absolute;
   left: -150px;
   top: 20px;
+  width: 50px;
+}
+
+.back-button-sign-up {
+  position: absolute;
+  left: -150px;
+  top: -180px;
+  width: 50px;
+}
+
+.back-button-login{
+  position: absolute;
+  left: -150px;
+  top: -170px;
+  width: 50px;
 }
 
 .buttons-container{
@@ -88,13 +117,38 @@ main {
 .landing-button {
   margin: 10px;
 }
-.login-button{
+.logout-button{
   position: absolute;
   top: -370px;
   right: 5px;
+  width: 70px;
+}
+
+.login-button {
+  position: absolute;
+  top: -340px;
+  right: 5px;
+  width: 70px;
 }
 .validation-container{
   text-align: start;
 font-size: 12px;
 }
+
+.answers-display-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+}
+
+.main-landing-page {
+  margin-right: 20px;
+  padding: 0;
+  width: 350px;
+}
+
+.login-form-container {
+  width: 300px;
+}
+
 
